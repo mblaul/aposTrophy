@@ -4,7 +4,7 @@
 
 
 import os
-from flask import Flask, render_template, json, request, session, redirect, url_for
+from flask import Flask, render_template, json, jsonify, request, session, redirect, url_for
 from flask.ext.mysql import MySQL
 from werkzeug import generate_password_hash, check_password_hash
 
@@ -107,6 +107,59 @@ def signUp():
 @app.route('/showDashboard')
 def showDashboard():
     return render_template('dashboard/dashboard.html')
+    
+@app.route('/showSimExam')
+def showTest():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.callproc('sp_generateSimExam')
+    data = cursor.fetchall()
+    
+    if len(data) > 0:
+        conn.commit()
+        
+        #The print statement below allows you to select individual items from query
+        #data[x] where x is the row itself
+        #data[x][y] where y is the column
+        print(data[0][3])
+        
+        paragraph1 = data[0][1]
+        question1 = data[0][3]
+        option1 = data[0][7]
+        option2 = data[1][7]
+        option3 = data[2][7]
+        option4 = data[3][7]
+
+        return render_template('test.html', paragraph1=paragraph1, question1=question1,option1=option1,option2=option2,option3=option3,option4=option4)
+    
+    
+@app.route('/simExam', methods = ['GET', 'POST'])
+def generatesimexam():
+
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.callproc('sp_generateSimExam')
+    data = cursor.fetchall()
+    
+    if len(data) > 0:
+        conn.commit()
+        
+        #The print statement below allows you to select individual items from query
+        #data[x] where x is the row itself
+        #data[x][y] where y is the column
+        print(data[0][3])
+        
+        
+        question1 = data[0][3]
+        
+        x = 0
+        while(x < len(data)):
+            print(data[x][3])
+            x+=1
+
+        return jsonify(data)
+    else:
+        return json.dumps({'error':str(data[0])})
 
     
 if __name__ == "__main__":
