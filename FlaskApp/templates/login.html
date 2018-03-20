@@ -14,7 +14,7 @@
         $('#btnLogIn').click(function() {
           
           $.ajax({
-            url: '/logIn',
+            url: '/login',
             data: $('form').serialize(),
             type: 'POST',
             success: function(response){
@@ -38,7 +38,7 @@
         <nav>
           <ul class="nav nav-pills pull-right">
             <li role="presentation" ><a href="/">Home</a></li>
-            <li role="presentation" class="active"><a href="showLogIn">Log In</a></li>
+            <li role="presentation" class="active"><a href="login">Log In</a></li>
             <li role="presentation"><a href="showSignUp">Sign Up</a></li>
           </ul>
         </nav>

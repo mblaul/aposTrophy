@@ -28,11 +28,11 @@ def main():
 def showSignUp():
     return render_template('signup.html')
     
-@app.route('/showLogIn')
+@app.route('/login', methods= ['GET'])
 def showLogIn():
     return render_template('login.html')
     
-@app.route('/logIn', methods = ['GET', 'POST'])
+@app.route('/login', methods = ['POST'])
 def login():
 
     _email = request.form['inputEmail']
