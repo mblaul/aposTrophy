@@ -6,7 +6,7 @@
 import os
 from flask import Flask, render_template, json, jsonify, request, session, redirect, url_for
 from flask.ext.mysql import MySQL
-from werkzeug import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 
