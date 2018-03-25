@@ -123,14 +123,24 @@ def showTest():
         #data[x][y] where y is the column
         print(data[0][3])
         
-        paragraph1 = data[0][1]
-        question1 = data[0][3]
-        option1 = data[0][7]
-        option2 = data[1][7]
-        option3 = data[2][7]
-        option4 = data[3][7]
-
-        return render_template('test.html', paragraph1=paragraph1, question1=question1,option1=option1,option2=option2,option3=option3,option4=option4)
+        paragraph = []
+        question = []
+        option = []
+        testdata = [[[]]]
+        
+        paragraph.append(data[0][1])
+        
+        question.append(data[0][3])
+        
+        option.append(data[0][7])
+        option.append(data[1][7])
+        option.append(data[2][7])
+        option.append(data[3][7])
+        
+        
+        
+        
+    return render_template('test.html', paragraph=paragraph, question=question, option = option, testdata = testdata)
     
     
 @app.route('/simExam', methods = ['GET', 'POST'])
