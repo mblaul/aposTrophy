@@ -5,23 +5,18 @@
 
 import os
 from flask import Flask, render_template, json, jsonify, request, session, redirect, url_for
-from flask.ext.mysql import MySQL
-from werkzeug import generate_password_hash, check_password_hash
-
+from flask_mysqldb import MySQL
+from werkzeug.security import generate_password_hash, check_password_hash
+from core import config
 
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-mysql = Flask(__name__)
 
 
 #MySQL connection configuration
-mysql = MySQL()
-app.config['MYSQL_DATABASE_USER'] = 'mblaulou'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''
-app.config['MYSQL_DATABASE_DB'] = 'apostrophy'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-mysql.init_app(app)
+app.config.from_object(config)
+mysql = MySQL(app)
 
 
 @app.route("/")
@@ -33,11 +28,11 @@ def main():
 def showSignUp():
     return render_template('signup.html')
     
-@app.route('/showLogIn')
+@app.route('/login', methods= ['GET'])
 def showLogIn():
     return render_template('login.html')
     
-@app.route('/logIn', methods = ['GET', 'POST'])
+@app.route('/login', methods = ['POST'])
 def login():
 
     _email = request.form['inputEmail']
@@ -46,7 +41,7 @@ def login():
     #Validate values
     if _email and _password:
         
-        conn = mysql.connect()
+        conn = mysql.connection.commit()
         cursor = conn.cursor()
         _hashed_password = _password
         cursor.callproc('sp_authenticateUser',(_email,_hashed_password))
@@ -87,15 +82,14 @@ def signUp():
     
     #Validate values
     if _fname and _lname and _email and _password:
-        
-        conn = mysql.connect()
-        cursor = conn.cursor()
+
+        cursor = mysql.connection.cursor()
         _hashed_password = generate_password_hash(_password)
         cursor.callproc('sp_createUser',(_fname,_lname,_email,_hashed_password))
         data = cursor.fetchall()
         
         if len(data) is 0:
-            conn.commit()
+            mysql.connection.commit()
             return redirect('showDashboard')
             return json.dumps({'html':'<span>All fields are a go!</span>'})
         else:
