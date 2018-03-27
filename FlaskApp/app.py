@@ -111,22 +111,25 @@ def showTest():
         #The print statement below allows you to select individual items from query
         #data[x] where x is the row itself
         #data[x][y] where y is the column
-        print(data)
-        print(data[0][3])
         
         paragraph = []
-        question = []
+        question = [[]]
         option = []
         testdata = [[[]]]
-        
+
         paragraph.append(data[0][1])
-        
+
         question.append(data[0][3])
-        
-        option.append(data[0][7])
-        option.append(data[1][7])
-        option.append(data[2][7])
-        option.append(data[3][7])
+        question.append(data[4][3])
+        question.append(data[8][3])
+        question.append(data[12][3])
+        question.append(data[16][3])
+        question.append(data[20][3])
+
+        for x in range (0, len(question)-1):
+            for y in range (0, len(data)-1):
+                question[x].append(data[y][7])
+
         
         
         

@@ -109,11 +109,14 @@
                                         Questions
                                     </h4>
                                     <p>
-                                        1. {{ question[0] }} <br>
-                                               a) {{ option[0] }} <br>
-                                               b) {{ option[1] }} <br>
-                                               c) {{ option[2] }} <br>
-                                               d) {{ option[3] }} <br>
+                                        {% for onequestion in question %}
+                                            {{ onequestion }} <br>
+                                            {% for oneoption in question[] %}
+                                                   a) {{ oneoption }} <br>
+                                            {% endfor %}
+                                            <hr>
+                                        {% endfor %}
+
                                     </p>
                                 </div>
                                 <div class="card-footer ">
