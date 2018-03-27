@@ -41,14 +41,14 @@ def login():
     #Validate values
     if _email and _password:
         
-        conn = mysql.connection.commit()
+        conn = mysql.connection
         cursor = conn.cursor()
         _hashed_password = _password
         cursor.callproc('sp_authenticateUser',(_email,_hashed_password))
         data = cursor.fetchall()
         
         if len(data) is 0:
-            conn.commit()
+            #conn.commit()
             session['user'] = _email
             return json.dumps({'html':'<span>Logged in!</span>'})
         else:
@@ -91,7 +91,6 @@ def signUp():
         if len(data) is 0:
             mysql.connection.commit()
             return redirect('showDashboard')
-            return json.dumps({'html':'<span>All fields are a go!</span>'})
         else:
             return json.dumps({'error':str(data[0])})
     else:
@@ -104,17 +103,18 @@ def showDashboard():
     
 @app.route('/showSimExam')
 def showTest():
-    conn = mysql.connect()
+    conn = mysql.connection
     cursor = conn.cursor()
     cursor.callproc('sp_generateSimExam')
     data = cursor.fetchall()
     
     if len(data) > 0:
-        conn.commit()
+        #conn.commit()
         
         #The print statement below allows you to select individual items from query
         #data[x] where x is the row itself
         #data[x][y] where y is the column
+        print(data)
         print(data[0][3])
         
         paragraph = []
@@ -134,13 +134,15 @@ def showTest():
         
         
         
+        
+        
     return render_template('test.html', paragraph=paragraph, question=question, option = option, testdata = testdata)
     
     
 @app.route('/simExam', methods = ['GET', 'POST'])
 def generatesimexam():
 
-    conn = mysql.connect()
+    conn = mysql.connection
     cursor = conn.cursor()
     cursor.callproc('sp_generateSimExam')
     data = cursor.fetchall()
