@@ -55,10 +55,7 @@ def login():
             return json.dumps({'error':str(data[0])})
     else:
         return json.dumps({'html':'<span>Please enter the required fields.</span>'})
-    
-    if _email == session['user']:
-        return redirect(url_for('showDashboard'))
-	
+
 @app.route('/getSession')
 def getsession():
     if 'user' in session:
