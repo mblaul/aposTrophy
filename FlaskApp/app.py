@@ -113,30 +113,27 @@ def showTest():
         #data[x][y] where y is the column
         
         paragraph = []
-        question = [[]]
-        option = []
-        testdata = [[[]]]
+        question = {}
+        option = {}
+
+        pagedata = {}
+
 
         paragraph.append(data[0][1])
 
-        question.append(data[0][3])
-        question.append(data[4][3])
-        question.append(data[8][3])
-        question.append(data[12][3])
-        question.append(data[16][3])
-        question.append(data[20][3])
+        for x in range(len(data)):
+            option[str(data[x][2])+str(data[x][6])] = data[x][7]
+            #print(option[str(data[x][2])+str(data[x][6])], '// == THIS IS OPTION TEXT')
+            if x % 4 == 0:
+                question[data[x][2]] = data[x][3]
+                #print(question[data[x][2]], '// THIS IS FROM THE DICT')
 
-        for x in range (0, len(question)-1):
-            for y in range (0, len(data)-1):
-                question[x].append(data[y][7])
-
+        for optid,opttext in option.items():
+            print(optid,opttext)
         
         
         
-        
-        
-        
-    return render_template('test.html', paragraph=paragraph, question=question, option = option, testdata = testdata)
+    return render_template('test.html', paragraph=paragraph, question=question, option = option)
     
     
 @app.route('/simExam', methods = ['GET', 'POST'])

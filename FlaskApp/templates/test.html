@@ -109,10 +109,12 @@
                                         Questions
                                     </h4>
                                     <p>
-                                        {% for onequestion in question %}
-                                            {{ onequestion }} <br>
-                                            {% for oneoption in question[] %}
-                                                   a) {{ oneoption }} <br>
+                                        {% for qid,qtext in question.items() %}
+                                            {{ qtext }} <br>
+                                            {% for optid, optext in option.items() %}
+                                                    {% if optid[0]|string == qid|string %}
+                                                        a) {{ optext }} <br>
+                                                    {% endif %}
                                             {% endfor %}
                                             <hr>
                                         {% endfor %}
