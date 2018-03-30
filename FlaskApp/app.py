@@ -129,11 +129,11 @@ def showTest():
 @app.route('/submitSimExam', methods=['POST'])
 def submitSimExam():
 
-    y=1
+    y=10
     for x in request.form:
         conn = mysql.connection
         cursor = conn.cursor()
-        cursor.callproc('sp_submitSimExam',(str(y),request.form.get(x), str(x)))
+        cursor.callproc('sp_submitSimExam',(str(y),request.form.get(x),str(x)))
         data = cursor.fetchall()
         mysql.connection.commit()
         y+=1

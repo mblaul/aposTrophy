@@ -138,7 +138,7 @@
                                                     {{ qtext }} <br>
                                                     {% for optid, optext in option.items() %}
                                                             {% if optid[0]|string == qid|string %}
-                                                                <label><input type="radio" name="{{ gid }}" id="{{ qid }}" value = "{{ optid }}">{{ optext }}</label> <br>
+                                                                <label><input type="radio" name = "{{ qid }}" value = "{{ optid[1:] }}">{{ optext }}</label> <br>
                                                             {% endif %}
                                                     {% endfor %}
                                                 <hr>
