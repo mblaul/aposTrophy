@@ -20,31 +20,30 @@
     <script type="text/javascript" src="../static/js/jquery/dist/jquery.min.js"></script>
 
     <script = "text/javascript">
-      $(function() {
-        $('#btnSubmit').click(function(event) {
+      <!--$(function() {-->
+        <!--$('#btnSubmit').click(function(event) {-->
 
-          $.ajax({
-            url: '/submitSimExam',
-            data: $('form').serialize(),
-            type: 'POST',
-            success: function(response){
-              console.log(response);
-              window.location = '/showResults';
-            },
-            error: function(error){
-              console.log(error);
-            }
-          });
-           event.preventDefault();
-        });
-      });
+          <!--$.ajax({-->
+            <!--url: '/submitSimExam',-->
+            <!--data: $('form').serialize(),-->
+            <!--type: 'POST',-->
+            <!--success: function(response){-->
+              <!--console.log(response);-->
+            <!--},-->
+            <!--error: function(error){-->
+              <!--console.log(error);-->
+            <!--}-->
+          <!--});-->
+           <!--event.preventDefault();-->
+        <!--});-->
+      <!--});-->
     </script>
 
 </head>
 
 <body>
     <div class="wrapper">
-        <div class="sidebar" data-image="static/img/sidebar-5.jpg" data-color="red">
+        <div class="sidebar" data-image="static/img/sidebar-5.jpg" data-color="green">
             <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
@@ -60,7 +59,7 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="dashboard.html">
                             <i class="nc-icon nc-chart-pie-35"></i>
-                            <p>Home</p>
+                            <p>Dashboard</p>
                         </a>
                     </li>
                     <li>
@@ -88,7 +87,7 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class=" container-fluid  ">
-                    <a class="navbar-brand" href="#pablo"> Home </a>
+                    <a class="navbar-brand" href="#pablo"> Dashboard </a>
                     <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar burger-lines"></span>
                         <span class="navbar-toggler-bar burger-lines"></span>
@@ -118,15 +117,15 @@
                         <div class="col-md-12">
                             <div class="card ">
                                 <div class="card-header ">
-                                    <h4 class="card-title">Simulation Exam</h4>
-                                    <p class="card-category">This is the real deal, good luck!</p>
+                                    <h4 class="card-title">Results</h4>
+                                    <p class="card-category">Here's how you did.</p>
                                 </div>
                                 <div class="card-body ">
                                     <h4>
                                         Paragraph
                                     </h4>
                                     <p>
-                                        {{ paragraph[0] }}
+
                                     </p>
                                     <hr />
                                     <h4>
@@ -135,16 +134,9 @@
                                     <p>
                                         <div class="form-group">
                                             <form>
-                                                {% for qid, qtext in question.items() %}
-                                                    {{ qtext }} <br>
-                                                    {% for optid, optext in option.items() %}
-                                                            {% if optid[0]|string == qid|string %}
-                                                                <label><input type="radio" name = "{{ qid }}" value = "{{ optid[1:] }}">{{ optext }}</label> <br>
-                                                            {% endif %}
-                                                    {% endfor %}
+
                                                 <hr>
-                                            {% endfor %}
-                                            <button id="btnSubmit" type="button" class="btn btn-lg btn-primary btn-block">Submit</button>
+
                                             </form>
                                         </div>
                                     </p>

@@ -129,6 +129,7 @@ def showTest():
 @app.route('/submitSimExam', methods=['POST'])
 def submitSimExam():
 
+    #Y is currently the result line id needs to be auto-generated instead.
     y=10
     for x in request.form:
         conn = mysql.connection
@@ -138,19 +139,11 @@ def submitSimExam():
         mysql.connection.commit()
         y+=1
 
-    # if len(data) is 0:
-    #
-    #     return redirect('showDashboard')
-    # else:
-    return json.dumps({'error':'errer'})
+    return json.dumps({'Code':'Success!'})
 
-    # conn = mysql.connection
-    # cursor = conn.cursor()
-    # cursor.callproc('sp_generateSimExam')
-    # data = cursor.fetchall()
-
-    # if len(data) > 0:
-    #     print('do something')
+@app.route('/showResults')
+def showResults():
+    return render_template('results.html')
 
 
     
