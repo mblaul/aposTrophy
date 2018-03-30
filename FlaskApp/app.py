@@ -80,9 +80,10 @@ def signUp():
     #Validate values
     if _fname and _lname and _email and _password:
 
-        cursor = mysql.connection.cursor()
-        _hashed_password = generate_password_hash(_password)
-        cursor.callproc('sp_createUser',(_fname,_lname,_email,_hashed_password))
+        conn = mysql.connection
+        cursor = conn.cursor()
+        #_hashed_password = generate_password_hash(_password)
+        cursor.callproc('sp_createUser',(_fname,_lname,_email,_password))
         data = cursor.fetchall()
         
         if len(data) is 0:
@@ -106,7 +107,6 @@ def showTest():
     data = cursor.fetchall()
     
     if len(data) > 0:
-        #conn.commit()
         
         #The print statement below allows you to select individual items from query
         #data[x] where x is the row itself
@@ -116,53 +116,42 @@ def showTest():
         question = {}
         option = {}
 
-        pagedata = {}
-
-
         paragraph.append(data[0][1])
 
         for x in range(len(data)):
             option[str(data[x][2])+str(data[x][6])] = data[x][7]
-            #print(option[str(data[x][2])+str(data[x][6])], '// == THIS IS OPTION TEXT')
             if x % 4 == 0:
                 question[data[x][2]] = data[x][3]
-                #print(question[data[x][2]], '// THIS IS FROM THE DICT')
 
-        for optid,opttext in option.items():
-            print(optid,opttext)
-        
-        
-        
     return render_template('test.html', paragraph=paragraph, question=question, option = option)
-    
-    
-@app.route('/simExam', methods = ['GET', 'POST'])
-def generatesimexam():
 
-    conn = mysql.connection
-    cursor = conn.cursor()
-    cursor.callproc('sp_generateSimExam')
-    data = cursor.fetchall()
-    
-    if len(data) > 0:
-        conn.commit()
-        
-        #The print statement below allows you to select individual items from query
-        #data[x] where x is the row itself
-        #data[x][y] where y is the column
-        print(data[0][3])
-        
-        
-        question1 = data[0][3]
-        
-        x = 0
-        while(x < len(data)):
-            print(data[x][3])
-            x+=1
 
-        return jsonify(data)
-    else:
-        return json.dumps({'error':str(data[0])})
+@app.route('/submitSimExam', methods=['POST'])
+def submitSimExam():
+
+    y=1
+    for x in request.form:
+        conn = mysql.connection
+        cursor = conn.cursor()
+        cursor.callproc('sp_submitSimExam',(str(y),request.form.get(x), str(x)))
+        data = cursor.fetchall()
+        mysql.connection.commit()
+        y+=1
+
+    # if len(data) is 0:
+    #
+    #     return redirect('showDashboard')
+    # else:
+    return json.dumps({'error':'errer'})
+
+    # conn = mysql.connection
+    # cursor = conn.cursor()
+    # cursor.callproc('sp_generateSimExam')
+    # data = cursor.fetchall()
+
+    # if len(data) > 0:
+    #     print('do something')
+
 
     
 if __name__ == "__main__":
