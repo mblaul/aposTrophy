@@ -123,21 +123,32 @@ def showTest():
             if x % 4 == 0:
                 question[data[x][2]] = data[x][3]
 
-    return render_template('test.html', paragraph=paragraph, question=question, option = option)
+    return render_template('test.html', paragraph=paragraph, question=question, option=option)
 
 
 @app.route('/submitSimExam', methods=['POST'])
 def submitSimExam():
 
-    #Y is currently the result line id needs to be auto-generated instead.
-    y=10
-    for x in request.form:
+    #Set variables for insertions into the tables
+    userid = 1 # This will be set to user session
+    testtype = 'SIM'
+    testskilllevel = None
+    testarea = None
+
+    #Create a new result entry
+    conn = mysql.connection
+    cursor = conn.cursor()
+    cursor.callproc('sp_newResult', (userid, testtype, testskilllevel, testarea))
+    data = cursor.fetchall()
+    mysql.connection.commit()
+
+    #Create result lines for each selection
+    for selection in request.form:
         conn = mysql.connection
         cursor = conn.cursor()
-        cursor.callproc('sp_submitSimExam',(str(y),request.form.get(x),str(x)))
+        cursor.callproc('sp_newResultLine', (request.form.get(selection), str(selection)))
         data = cursor.fetchall()
         mysql.connection.commit()
-        y+=1
 
     return json.dumps({'Code':'Success!'})
 

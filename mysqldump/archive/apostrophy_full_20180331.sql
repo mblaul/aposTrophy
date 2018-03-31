@@ -109,12 +109,12 @@ CREATE TABLE `result` (
   `USER_ID` bigint(20) NOT NULL,
   `RESULT_DATE` date NOT NULL,
   `TEST_TYPE` varchar(15) NOT NULL,
-  `TEST_SKILL_LVL` int(11) DEFAULT NULL,
-  `TEST_AREA` varchar(25) DEFAULT NULL,
+  `TEST_SKILL_LVL` int(11) NOT NULL,
+  `TEST_AREA` varchar(25) NOT NULL,
   PRIMARY KEY (`RESULT_ID`),
   KEY `USER_ID` (`USER_ID`),
   CONSTRAINT `RESULT_ibfk_1` FOREIGN KEY (`USER_ID`) REFERENCES `tbl_user` (`USER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COMMENT='Table to store results from ';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store results from ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +123,6 @@ CREATE TABLE `result` (
 
 LOCK TABLES `result` WRITE;
 /*!40000 ALTER TABLE `result` DISABLE KEYS */;
-INSERT INTO `result` VALUES (4,1,'2018-03-31','SIM',NULL,NULL);
 /*!40000 ALTER TABLE `result` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,7 +134,7 @@ DROP TABLE IF EXISTS `result_line`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `result_line` (
-  `RESULT_LINE_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `RESULT_LINE_ID` int(11) NOT NULL,
   `RESULT_ID` int(11) NOT NULL,
   `OPTION_ID` int(1) NOT NULL,
   `QUESTION_ID` int(11) NOT NULL,
@@ -144,7 +143,7 @@ CREATE TABLE `result_line` (
   KEY `RESULT_LINE_ibfk_2_idx` (`RESULT_ID`),
   CONSTRAINT `RESULT_LINE_ibfk_1` FOREIGN KEY (`QUESTION_ID`, `OPTION_ID`) REFERENCES `options` (`QUESTION_ID`, `OPTION_ID`),
   CONSTRAINT `RESULT_LINE_ibfk_2` FOREIGN KEY (`RESULT_ID`) REFERENCES `result` (`RESULT_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1 COMMENT='Table to match user option to a result line';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to match user option to a result line';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +152,6 @@ CREATE TABLE `result_line` (
 
 LOCK TABLES `result_line` WRITE;
 /*!40000 ALTER TABLE `result_line` DISABLE KEYS */;
-INSERT INTO `result_line` VALUES (13,4,1,1),(14,4,2,2),(15,4,3,3),(16,4,3,4),(17,4,3,5),(18,4,2,6);
 /*!40000 ALTER TABLE `result_line` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,7 +278,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_newResult` */;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_submitSimExam` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -290,62 +288,22 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_newResult`(
-	IN uid BIGINT(20),
-    IN testtype VARCHAR(15),
-    IN testskilllevel INT(11),
-    IN testarea VARCHAR(25)
-)
-BEGIN
-	insert into result
-        (
-			USER_ID,
-			RESULT_DATE,
-            TEST_TYPE,
-            TEST_SKILL_LVL,
-            TEST_AREA
-        )
-        values
-        (
-			uid,
-            NOW(),
-            testtype,
-            testskilllevel,
-            testarea
-        );
-    
-    
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_newResultLine` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_newResultLine`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_submitSimExam`(
+	IN rsid INT(11),
     IN optid VARCHAR(1),
     IN qid VARCHAR(11)
 )
 BEGIN
 	insert into result_line
         (
-			RESULT_ID,
+			RESULT_LINE_ID,
 			OPTION_ID,
             QUESTION_ID
             
         )
         values
         (
-			(SELECT RESULT_ID FROM RESULT ORDER BY RESULT_ID DESC LIMIT 1),
+			rsid,
             optid,
             qid
         );
@@ -367,4 +325,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-31 16:58:16
+-- Dump completed on 2018-03-31 15:19:14
