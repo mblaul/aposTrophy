@@ -49,8 +49,16 @@ def login():
 
         # If data is returned something went wrong, if data was not returned then the user was authenticated
         if len(data) is 0:
-            #Set session variable
-            session['user'] = _email
+
+            print(_email)
+            conn = mysql.connection
+            cursor = conn.cursor()
+            _hashed_password = _password
+            cursor.callproc('sp_getUserID', (_email,))
+            data = cursor.fetchall()
+
+            #Set session variable to userid
+            session['user'] = str(data[0][0])
 
             #In login page, an ajax script redirects user to /dashboard
             return json.dumps({'html':'<span>Logged in!</span>'})
@@ -85,7 +93,7 @@ def signUp():
 
         conn = mysql.connection
         cursor = conn.cursor()
-        cursor.callproc('sp_createUser',(_fname,_lname,_email,_password))
+        cursor.callproc('sp_createUser',(_fname, _lname, _email, _password))
         data = cursor.fetchall()
 
         # If data is returned something went wrong, if data was not returned then the user was created
@@ -100,7 +108,8 @@ def signUp():
         
 @app.route('/showDashboard')
 def showDashboard():
-    return render_template('dashboard/dashboard.html')
+    sesid = session['user']
+    return render_template('dashboard/dashboard.html', sesid=sesid)
     
 @app.route('/showSimExam')
 def showTest():
