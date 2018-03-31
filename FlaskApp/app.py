@@ -108,8 +108,7 @@ def signUp():
         
 @app.route('/showDashboard')
 def showDashboard():
-    sesid = session['user']
-    return render_template('dashboard/dashboard.html', sesid=sesid)
+    return render_template('dashboard/dashboard.html')
     
 @app.route('/showSimExam')
 def showTest():
@@ -148,7 +147,7 @@ def showTest():
 def submitSimExam():
 
     #Set variables for insertions into the tables
-    userid = 1 # This will be set to user session
+    userid = str(session['user'])
     testtype = 'SIM'
     testskilllevel = None
     testarea = None
