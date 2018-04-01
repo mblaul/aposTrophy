@@ -1,70 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
- 
-<head>
-    <title>aposTrophy - Home</title>
- 
- 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
- 
-    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
- 
- 
-</head>
- 
-<body>
- 
-    <div class="container">
-        <div class="header">
-            <nav>
-                <ul class="nav nav-pills pull-right">
-                    <li role="presentation" class="active"><a href="/">Home</a>
-                    </li>
-                    <li role="presentation"><a href="login">Log In</a>
-                    </li>
-                    <li role="presentation"><a href="showSignUp">Sign Up</a>
-                    </li>
-                </ul>
-            </nav>
-            <h3 class="text-muted">aposTrophy</h3>
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>aposTrophy - Home</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.dropotron.min.js"></script>
+		<script src="js/jquery.slidertron.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+			<link rel="stylesheet" href="../static/skel.css" />
+			<link rel="stylesheet" href="../static/style.css" />
+			<link rel="stylesheet" href="../static/style-desktop.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+        
+        <style>
+.responsive {
+    width: 100%;
+    height: auto;
+}       
+        
+            .bannerImage .btn {
+  position: absolute;
+  top: 60%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #D83A4A;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+        </style>
+	</head>
+	<body class="homepage" id="top">
+
+		<!-- Header -->
+			<div id="header">
+				<div class="container">
+						
+					<!-- Logo -->
+						<div id="logo">
+							<h1><img src="../static/img/trophy.png" width="50px"><a href="index.html">aposTrophy</a></h1>
+						</div>
+					
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li class="active"><a href="index.html">Home</a></li>
+								<li><a href="login">Login</a></li>
+								<li><a href="showSignUp">Signup</a></li>
+							</ul>
+						</nav> 
+                </div>
         </div>
- 
-        <div class="jumbotron">
-            <h1>Welcome to aposTrophy</h1>
-            <p class="lead">The world's best English SAT test preparation.</p>
-            <p><a class="btn btn-lg btn-success" href="showSignUp" role="button">Sign up today</a>
-            </p>
+
+        <div class="bannerImage">
+	<img src="../static/img/test.png" class="responsive">
+            <button class="btn" href="showSignUp">Sign up today</button>
         </div>
- 
-        <div class="row marketing">
-            <div class="col-lg-6">
-                <h4>Bucket List</h4>
-                <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
- 
-                <h4>Bucket List</h4>
-                <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
- 
-                <h4>Bucket List</h4>
-                <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-            </div>
- 
-            <div class="col-lg-6">
-                <h4>Bucket List</h4>
-                <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
- 
-                <h4>Bucket List</h4>
-                <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
- 
-                <h4>Bucket List</h4>
-                <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-            </div>
-        </div>
- 
-        <footer class="footer">
-            <p>&copy; Company 2018</p>
-        </footer>
- 
-    </div>
-</body>
- 
+
+		<!-- Featured -->
+			<div id="featured">
+				<div class="container">
+					<div class="row 200%">
+						<section class="3u">
+							<span class="pennant icon fa-money"></span>
+							<h3>Absolutely free</h3>
+							<p>No need to spend any extra money practicing for your big test.</p>
+						</section>
+						<section class="3u">
+							<span class="pennant icon fa-cloud"></span>
+							<h3>Unlimited</h3>
+							<p>Take as many practice tests as you want. Includes different areas such as comprehension, grammar, and reading.</p>
+						</section>
+						<section class="3u">
+							<span class="pennant icon fa-file"></span>
+							<h3>As close to the real test as it gets!</h3>
+							<p>Our simulated and practice tests are modeled after real SAT tests.</p>
+						</section>
+                        <section class="3u">
+							<span class="pennant icon fa-save"></span>
+							<h3>Save your results</h3>
+							<p> Our system allows you to check back on previous tests to keep track of your improvement and progress.</p>
+						</section>
+					</div>
+					
+				</div>
+			</div>
+
+
+								
+
+		<!-- Copyright -->
+			<div id="copyright">
+				<a href="#top" class="bubble-top scrolly">Top</a>
+
+				<div class="container">
+					<div class="row">
+						<div class="6u">
+							<span>Copyright &copy; aposTrophy. All rights reserved.</span>
+						</div>
+						<div class="6u">
+							<ul class="social">
+								<li><a href="#" class="icon fa-twitter"><span>Twitter</span></a></li>
+								<li><a href="#" class="icon fa-facebook"><span></span></a></li>
+								<li><a href="#" class="icon fa-envelope"><span>Google+</span></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+	</body>
 </html>
