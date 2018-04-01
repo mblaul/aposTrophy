@@ -64,7 +64,7 @@ CREATE TABLE `paragraph` (
 
 LOCK TABLES `paragraph` WRITE;
 /*!40000 ALTER TABLE `paragraph` DISABLE KEYS */;
-INSERT INTO `paragraph` VALUES (1,'Akira came directly, breaking all tradition. Was\nthat it? Had he followed form—had he asked his\nmother to speak to his father to approach a\ngo-between—would Chie have been more receptive?\nHe came on a winter’s eve. He pounded on the\ndoor while a cold rain beat on the shuttered veranda,\nso at first Chie thought him only the wind. The maid\nknew better. Chie heard her soft scuttling footsteps,\nthe creak of the door. Then the maid brought a\ncalling card to the drawing room, for Chie.\nChie was reluctant to go to her guest; perhaps she\nwas feeling too cozy. She and Naomi were reading at\na low table set atop a charcoal brazier. A thick quilt\nspread over the sides of the table so their legs were\ntucked inside with the heat.\n“Who is it at this hour, in this weather?” Chie\nquestioned as she picked the name card off the\nmaid’s lacquer tray.\n“Shinoda, Akira. Kobe Dental College,” she read.\nNaomi recognized the name. Chie heard a soft\nintake of air.\n“I think you should go,” said Naomi.\nAkira was waiting in the entry. He was in his early\ntwenties, slim and serious, wearing the black\nmilitary-style uniform of a student. As he\nbowed—his hands hanging straight down, a\nblack cap in one, a yellow oil-paper umbrella in the\nother—Chie glanced beyond him. In the glistening\nsurface of the courtyard’s rain-drenched paving\nstones, she saw his reflection like a dark double.\n“Madame,” said Akira, “forgive my disruption,\nbut I come with a matter of urgency.”\nHis voice was soft, refined. He straightened and\nstole a deferential peek at her face.\nIn the dim light his eyes shone with sincerity.\nChie felt herself starting to like him.\n“Come inside, get out of this nasty night. Surely\nyour business can wait for a moment or two.”\n“I don’t want to trouble you. Normally I would\napproach you more properly but I’ve received word\nof a position. I’ve an opportunity to go to America, as\ndentist for Seattle’s Japanese community.”\n“Congratulations,” Chie said with amusement.\n“That is an opportunity, I’m sure. But how am I\ninvolved?”\nEven noting Naomi’s breathless reaction to the\nname card, Chie had no idea. Akira’s message,\ndelivered like a formal speech, filled her with\nmaternal amusement. You know how children speak\nso earnestly, so hurriedly, so endearingly about\nthings that have no importance in an adult’s mind?\nThat’s how she viewed him, as a child.\nIt was how she viewed Naomi. Even though\nNaomi was eighteen and training endlessly in the arts\nneeded to make a good marriage, Chie had made no\neffort to find her a husband.\nAkira blushed.\n“Depending on your response, I may stay in\nJapan. I’ve come to ask for Naomi’s hand.”\nSuddenly Chie felt the dampness of the night.\n“Does Naomi know anything of your...\nambitions?”\n“We have an understanding. Please don’t judge\nmy candidacy by the unseemliness of this proposal. I\nask directly because the use of a go-between takes\nmuch time. Either method comes down to the same\nthing: a matter of parental approval. If you give your\nconsent, I become Naomi’s yoshi.* We’ll live in the\nHouse of Fuji. Without your consent, I must go to\nAmerica, to secure a new home for my bride.”\nEager to make his point, he’d been looking her full\nin the face. Abruptly, his voice turned gentle. “I see\nI’ve startled you. My humble apologies. I’ll take no\nmore of your evening. My address is on my card. If\nyou don’t wish to contact me, I’ll reapproach you in\ntwo weeks’ time. Until then, good night.”\nHe bowed and left. Taking her ease, with effortless\ngrace, like a cat making off with a fish.\n“Mother?” Chie heard Naomi’s low voice and\nturned from the door. “He has asked you?”\nThe sight of Naomi’s clear eyes, her dark brows\ngave Chie strength. Maybe his hopes were\npreposterous.\n“Where did you meet such a fellow? Imagine! He\nthinks he can marry the Fuji heir and take her to\nAmerica all in the snap of his fingers!”\nChie waited for Naomi’s ripe laughter.\nNaomi was silent. She stood a full half minute\nlooking straight into Chie’s eyes. Finally, she spoke.\n“I met him at my literary meeting.”\nNaomi turned to go back into the house, then\nstopped.\n“Mother.”\n“Yes?”\n“I mean to have him.”\n* a man who marries a woman of higher status and takes her\nfamily’s name');
+INSERT INTO `paragraph` VALUES (1,'Akira came directly, breaking all tradition. Was\nthat it? Had he followed form—had he asked his\nmother to speak to his father to approach a\ngo-between—would Chie have been more receptive?\nHe came on a winter’s eve. He pounded on the\ndoor while a cold rain beat on the shuttered veranda,\nso at first Chie thought him only the wind. The maid\nknew better. Chie heard her soft scuttling footsteps,\nthe creak of the door. Then the maid brought a\ncalling card to the drawing room, for Chie.\nChie was reluctant to go to her guest; perhaps she\nwas feeling too cozy. She and Naomi were reading at\na low table set atop a charcoal brazier. A thick quilt\nspread over the sides of the table so their legs were\ntucked inside with the heat.\n“Who is it at this hour, in this weather?” Chie\nquestioned as she picked the name card off the\nmaid’s lacquer tray.\n“Shinoda, Akira. Kobe Dental College,” she read.\nNaomi recognized the name. Chie heard a soft\nintake of air.\n“I think you should go,” said Naomi.\nAkira was waiting in the entry. He was in his early\ntwenties, slim and serious, wearing the black\nmilitary-style uniform of a student. As he\nbowed—his hands hanging straight down, a\nblack cap in one, a yellow oil-paper umbrella in the\nother—Chie glanced beyond him. In the glistening\nsurface of the courtyard’s rain-drenched paving\nstones, she saw his reflection like a dark double.\n“Madame,” said Akira, “forgive my disruption,\nbut I come with a matter of urgency.”\nHis voice was soft, refined. He straightened and\nstole a deferential peek at her face.\nIn the dim light his eyes shone with sincerity.\nChie felt herself starting to like him.\n“Come inside, get out of this nasty night. Surely\nyour business can wait for a moment or two.”\n“I don’t want to trouble you. Normally I would\napproach you more properly but I’ve received word\nof a position. I’ve an opportunity to go to America, as\ndentist for Seattle’s Japanese community.”\n“Congratulations,” Chie said with amusement.\n“That is an opportunity, I’m sure. But how am I\ninvolved?”\nEven noting Naomi’s breathless reaction to the\nname card, Chie had no idea. Akira’s message,\ndelivered like a formal speech, filled her with\nmaternal amusement. You know how children speak\nso earnestly, so hurriedly, so endearingly about\nthings that have no importance in an adult’s mind?\nThat’s how she viewed him, as a child.\n1 1 .......................................................................................................................................................................................................\nLine\n5\n10\n15\n20\n25\n30\n35\n40\n45\n50\nUnauthorized copying or reuse of any part of this page is illegal. CONTINUE\n2\nIt was how she viewed Naomi. Even though\nNaomi was eighteen and training endlessly in the arts\nneeded to make a good marriage, Chie had made no\neffort to find her a husband.\nAkira blushed.\n“Depending on your response, I may stay in\nJapan. I’ve come to ask for Naomi’s hand.”\nSuddenly Chie felt the dampness of the night.\n“Does Naomi know anything of your...\nambitions?”\n“We have an understanding. Please don’t judge\nmy candidacy by the unseemliness of this proposal. I\nask directly because the use of a go-between takes\nmuch time. Either method comes down to the same\nthing: a matter of parental approval. If you give your\nconsent, I become Naomi’s yoshi.* We’ll live in the\nHouse of Fuji. Without your consent, I must go to\nAmerica, to secure a new home for my bride.”\nEager to make his point, he’d been looking her full\nin the face. Abruptly, his voice turned gentle. “I see\nI’ve startled you. My humble apologies. I’ll take no\nmore of your evening. My address is on my card. If\nyou don’t wish to contact me, I’ll reapproach you in\ntwo weeks’ time. Until then, good night.”\nHe bowed and left. Taking her ease, with effortless\ngrace, like a cat making off with a fish.\n“Mother?” Chie heard Naomi’s low voice and\nturned from the door. “He has asked you?”\nThe sight of Naomi’s clear eyes, her dark brows\ngave Chie strength. Maybe his hopes were\npreposterous.\n“Where did you meet such a fellow? Imagine! He\nthinks he can marry the Fuji heir and take her to\nAmerica all in the snap of his fingers!”\nChie waited for Naomi’s ripe laughter.\nNaomi was silent. She stood a full half minute\nlooking straight into Chie’s eyes. Finally, she spoke.\n“I met him at my literary meeting.”\nNaomi turned to go back into the house, then\nstopped.\n“Mother.”\n“Yes?”\n“I mean to have him.”\n* a man who marries a woman of higher status and takes her\nfamily’s name');
 /*!40000 ALTER TABLE `paragraph` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +114,7 @@ CREATE TABLE `result` (
   PRIMARY KEY (`RESULT_ID`),
   KEY `USER_ID` (`USER_ID`),
   CONSTRAINT `RESULT_ibfk_1` FOREIGN KEY (`USER_ID`) REFERENCES `tbl_user` (`USER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COMMENT='Table to store results from ';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COMMENT='Table to store results from ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +123,7 @@ CREATE TABLE `result` (
 
 LOCK TABLES `result` WRITE;
 /*!40000 ALTER TABLE `result` DISABLE KEYS */;
-INSERT INTO `result` VALUES (4,1,'2018-03-31','SIM',NULL,NULL),(5,10,'2018-03-31','SIM',NULL,NULL),(6,10,'2018-03-31','SIM',NULL,NULL);
+INSERT INTO `result` VALUES (4,1,'2018-03-31','SIM',NULL,NULL),(5,10,'2018-03-31','SIM',NULL,NULL);
 /*!40000 ALTER TABLE `result` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +144,7 @@ CREATE TABLE `result_line` (
   KEY `RESULT_LINE_ibfk_2_idx` (`RESULT_ID`),
   CONSTRAINT `RESULT_LINE_ibfk_1` FOREIGN KEY (`QUESTION_ID`, `OPTION_ID`) REFERENCES `options` (`QUESTION_ID`, `OPTION_ID`),
   CONSTRAINT `RESULT_LINE_ibfk_2` FOREIGN KEY (`RESULT_ID`) REFERENCES `result` (`RESULT_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1 COMMENT='Table to match user option to a result line';
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1 COMMENT='Table to match user option to a result line';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +153,7 @@ CREATE TABLE `result_line` (
 
 LOCK TABLES `result_line` WRITE;
 /*!40000 ALTER TABLE `result_line` DISABLE KEYS */;
-INSERT INTO `result_line` VALUES (13,4,1,1),(14,4,2,2),(15,4,3,3),(16,4,3,4),(17,4,3,5),(18,4,2,6),(19,5,1,1),(20,5,2,2),(21,5,3,3),(22,5,3,4),(23,5,3,5),(24,5,2,6),(25,6,2,1),(26,6,1,2),(27,6,1,3),(28,6,1,4),(29,6,1,5),(30,6,2,6);
+INSERT INTO `result_line` VALUES (13,4,1,1),(14,4,2,2),(15,4,3,3),(16,4,3,4),(17,4,3,5),(18,4,2,6),(19,5,1,1),(20,5,2,2),(21,5,3,3),(22,5,3,4),(23,5,3,5),(24,5,2,6);
 /*!40000 ALTER TABLE `result_line` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,31 +280,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_getResults` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getResults`(IN `uid` VARCHAR(255))
-BEGIN
-	SELECT 	result.RESULT_ID, result_line.RESULT_LINE_ID, TEST_TYPE, TEST_SKILL_LVL, TEST_AREA, RESULT_LINE.QUESTION_ID, RESULT_LINE.OPTION_ID,
-		OPTIONS.IS_CORRECT, SUM(OPTIONS.IS_CORRECT) as TOTAL_CORRECT
-    FROM result
-    LEFT JOIN result_line ON result_line.RESULT_ID = result.RESULT_ID
-    LEFT JOIN options ON options.OPTION_ID = result_line.OPTION_ID 
-    WHERE USER_ID = 10 
-    GROUP BY RESULT_ID, RESULT_LINE_ID;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_getUserID` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -411,4 +386,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-31 20:08:35
+-- Dump completed on 2018-03-31 17:38:13
