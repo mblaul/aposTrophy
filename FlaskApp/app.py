@@ -21,6 +21,8 @@ mysql = MySQL(app)
 
 @app.route("/")
 def main():
+    if 'user' in session:
+        return redirect(url_for('showDashboard'))
     return render_template('index.html')
     
 @app.route('/login', methods= ['GET'])
@@ -62,7 +64,7 @@ def login():
             print(data[0])
             session['user'] = data[0]
 
-            return showDashboard()
+            return redirect(url_for('showDashboard'))
         else:
             return json.dumps({'error':'Not authenticated'}) #str(data[0])})
     else:
@@ -178,7 +180,14 @@ def submitSimExam():
 def showResults():
     return render_template('results.html')
 
+@app.route('/practice', methods=['GET'])
+def showPracticeExam():
+    pass
 
-    
+@app.route('/practice', methods=['POST'])
+def submitPracticeExam():
+    pass
+
+
 if __name__ == "__main__":
     app.run(debug=True,host=os.getenv('IP', '0.0.0.0'),port=int(os.getenv('PORT', 8080)))
