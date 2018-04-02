@@ -29,11 +29,18 @@ def showLogIn():
 
 
 def authenticateUser(email, password):
-    pass
-    # cursor = mysql.connection.cursor()
-    # cursor.execute('''SELECT user_username, user_password FROM tbl_users WHERE user_username=${email},
-    # user_password=${password}''')
-    # pass;
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT user_username, user_password FROM tbl_user WHERE user_username=\'{}\' AND user_password=\'{}\''''.format(email, password))
+    rv = cursor.fetchall()
+    if len(rv) > 0:
+        return True
+    else:
+        return False
+
+def get_user_id(email):
+    cur = mysql.connection.cursor()
+    cur.execute('''SELECT user_id FROM tbl_user WHERE user_username=\'{}\''''.format(email))
+    return cur.fetchone()
 
 @app.route('/login', methods = ['POST'])
 def login():
@@ -43,31 +50,21 @@ def login():
     
     #Validate values
     if _email and _password:
-        
-        conn = mysql.connection
-        cursor = conn.cursor()
         _hashed_password = _password
-        cursor.callproc('sp_authenticateUser',(_email,_hashed_password))
-        data = cursor.fetchall()
 
         # If data is returned something went wrong, if data was not returned then the user was authenticated
-        if len(data) is 0:
+        if authenticateUser(_email, _hashed_password):
 
             print(_email)
-            conn = mysql.connection
-            cursor = conn.cursor()
-            _hashed_password = _password
-            cursor.callproc('sp_getUserID', (_email,))
-            data = cursor.fetchall()
+            data = get_user_id(_email)
 
             #Set session variable to userid
-            session['user'] = str(data[0][0])
+            print(data[0])
+            session['user'] = data[0]
 
-            #In login page, an ajax script redirects user to /dashboard
-            showDashboard()
-            # return json.dumps({'html':'<span>Logged in!</span>'})
+            return showDashboard()
         else:
-            return json.dumps({'error':str(data[0])})
+            return json.dumps({'error':'Not authenticated'}) #str(data[0])})
     else:
         return json.dumps({'html':'<span>Please enter the required fields.</span>'})
 
@@ -114,7 +111,7 @@ def signUp():
         return json.dumps({'html':'<span>Please enter the required fields.</span>'})
         
         
-@app.route('/showDashboard')
+@app.route('/showDashboard', methods=["GET"])
 def showDashboard():
     return render_template('dashboard/dashboard.html')
     
