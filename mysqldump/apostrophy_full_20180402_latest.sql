@@ -166,7 +166,6 @@ LOCK TABLES `tbl_user` WRITE;
 INSERT INTO `tbl_user` VALUES (1,'Test','User','test@test.com','pbkdf2:sha256:50000$'),(2,'Matt','Ball','matt@ball.com','password123'),(3,'Janel','Yousif','janel@gmail.com','pbkdf2:sha256:50000$'),(4,'test','test','test@terst.com','123456'),(5,'ben2','wyatt','testest@masidfas.com','123123123123'),(8,'test222','teest','2131231@sdfsf.com','12312312313'),(9,'test222222','teest','2131231@sdfsfsss.com','12312312313'),(10,'matt','blaul','matt@blaul.com','123456');
 /*!40000 ALTER TABLE `tbl_user` ENABLE KEYS */;
 UNLOCK TABLES;
-paragraph
 --
 -- Dumping events for database 'apostrophy'
 --
