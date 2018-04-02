@@ -26,7 +26,15 @@ def main():
 @app.route('/login', methods= ['GET'])
 def showLogIn():
     return render_template('login.html')
-    
+
+
+def authenticateUser(email, password):
+    pass
+    # cursor = mysql.connection.cursor()
+    # cursor.execute('''SELECT user_username, user_password FROM tbl_users WHERE user_username=${email},
+    # user_password=${password}''')
+    # pass;
+
 @app.route('/login', methods = ['POST'])
 def login():
 
@@ -56,7 +64,8 @@ def login():
             session['user'] = str(data[0][0])
 
             #In login page, an ajax script redirects user to /dashboard
-            return json.dumps({'html':'<span>Logged in!</span>'})
+            showDashboard()
+            # return json.dumps({'html':'<span>Logged in!</span>'})
         else:
             return json.dumps({'error':str(data[0])})
     else:

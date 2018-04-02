@@ -317,7 +317,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getUserID`(IN `p_username` VARCHAR(255))
 BEGIN
-	SELECT USER_ID FROM tbl_User WHERE user_username = p_username;
+	SELECT USER_ID FROM tbl_user WHERE user_username = p_username;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;

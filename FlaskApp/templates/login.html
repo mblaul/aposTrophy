@@ -6,12 +6,12 @@
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
-		<script src="js/jquery.min.js"></script>
-		<script src="js/jquery.dropotron.min.js"></script>
+		<script src="/static/js/jquery/dist/jquery.js"></script>
+		{#<script src="js/jquery.dropotron.min.js"></script>
 		<script src="js/jquery.slidertron.min.js"></script>
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-layers.min.js"></script>
-		<script src="js/init.js"></script>
+		<script src="js/init.js"></script>#}
 			<link rel="stylesheet" href="../static/skel.css" />
 			<link rel="stylesheet" href="../static/style.css" />
 			<link rel="stylesheet" href="../static/style-desktop.css" />
@@ -23,7 +23,7 @@
 }
         </style>
         
-            <script = "text/javascript">
+           {# <script type="text/javascript">
       $(function() {
         $('#btnLogIn').click(function() {
           
@@ -41,7 +41,7 @@
           });
         });
       });
-    </script>
+    </script>#}
         
 	</head>
 	<body id="top">
@@ -52,7 +52,7 @@
 						
 					<!-- Logo -->
 						<div id="logo">
-							<h1><img src="../static/img/trophy.png" width="50px"><a href="index.html">aposTrophy</a></h1>
+							<h1><img src="../static/img/trophy.png" width="50px"><a href="/">aposTrophy</a></h1>
 						</div>
 					
 					<!-- Nav -->
@@ -75,7 +75,7 @@
 						<!-- Content -->
 							<div id="content" class="12u">
 								<section>
-						  <form class="form-signin">
+						  <form class="form-signin" action="/login" method="post">
 							<!-- Basic Demographic Fields -->
 									<div class="row 50%">
 									<div class="12u">
