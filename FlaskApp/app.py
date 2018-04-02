@@ -22,11 +22,6 @@ mysql = MySQL(app)
 @app.route("/")
 def main():
     return render_template('index.html')
-
-      
-@app.route('/showSignUp')
-def showSignUp():
-    return render_template('signup.html')
     
 @app.route('/login', methods= ['GET'])
 def showLogIn():
@@ -78,8 +73,12 @@ def logout():
    # remove the username from the session if it is there
    session.pop('username', None)
    return redirect(url_for('index'))
-    
-@app.route('/signUp', methods=['POST'])
+
+@app.route('/signup', methods=['GET'])
+def showSignUp():
+    return render_template('signup.html')
+
+@app.route('/signup', methods=['POST'])
 def signUp():
     
     #Read vlaues from UI
@@ -99,7 +98,7 @@ def signUp():
         # If data is returned something went wrong, if data was not returned then the user was created
         if len(data) is 0:
             mysql.connection.commit()
-            return render_template('/login.html')
+            return render_template('login.html')
         else:
             return json.dumps({'error':str(data[0])})
     else:

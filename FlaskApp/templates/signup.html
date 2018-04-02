@@ -28,7 +28,7 @@
         $('#btnSignUp').click(function() {
           
           $.ajax({
-            url: '/signUp',
+            url: '/signup',
             data: $('form').serialize(),
             type: 'POST',
             success: function(response){
@@ -56,9 +56,9 @@
 					<!-- Nav -->
 						<nav id="nav">
 							<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="/">Home</a></li>
 								<li><a href="login">Login</a></li>
-								<li class="active"><a href="showSignUp">Signup</a></li>
+								<li class="active"><a href="signup">Signup</a></li>
 							</ul>
 						</nav> 
                 </div>
@@ -71,7 +71,7 @@
                     <br>
 						<!-- Content -->
 								<section>
-						<form class="form-signin" action = '/signUp'>
+						<form class="form-signin" action = '/signup'>
 							<!-- Basic Demographic Fields -->
 								<div class="row 50%">
 									<div class="12u">
