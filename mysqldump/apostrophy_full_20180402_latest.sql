@@ -17,7 +17,6 @@ USE `apostrophy`;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-
 --
 -- Table structure for table `options`
 --
@@ -39,13 +38,15 @@ CREATE TABLE `options` (
 -- Dumping data for table `options`
 --
 
-
 LOCK TABLES `options` WRITE;
 /*!40000 ALTER TABLE `options` DISABLE KEYS */;
-INSERT INTO `options` VALUES (1,1,'One character argues with another character\r\nwho intrudes on her home.',0),(2,1,'One character receives a surprising request from\r\nanother character.',1),(3,1,'One character reminisces about choices she has\r\nmade over the years.',0),(4,1,'One character criticizes another character for\r\npursuing an unexpected course of action.',0),(1,2,'A careful analysis of a traditional practice',0),(2,2,'A detailed depiction of a meaningful encounter',1),(3,2,'A definitive response to a series of questions',0),(4,2,'A cheerful recounting of an amusing anecdote',0),(1,3,'frankly.',0),(2,3,'confidently.',0),(3,3,'without mediation',1),(4,3,'with precision.',0),(1,4,'She will consider his proposal inappropriate.',1),(2,4,'She will mistake his earnestness for immaturity.',0),(3,4,'She will consider his unscheduled visit an imposition.',0),(4,4,'She will underestimate the sincerity of his emotions.',0),(1,5,'Line 33 (“His voice... refined”)',0),(2,5,'Lines 49-51 (“You... mind”)',0),(3,5,'Lines 63-64 (“Please... proposal”)',1),(4,5,'Lines 71-72 (“Eager... face”)',0),(1,6,'affection but not genuine love.',0),(2,6,'objectivity but not complete impartiality.',0),(3,6,'amusement but not mocking disparagement.',0),(4,6,'respect but not utter deference.',1),(1,7,'describe a culture.',0),(2,7,'criticize a tradition',0),(3,7,'question a suggestion.',0),(4,7,'analyze a reaction.',1),(1,8,'appearance.',0),(2,8,'custom.',1),(3,8,'structure.',0),(4,8,'nature.',0),(1,9,'He fears that his own parents will disapprove of Naomi.',0),(2,9,'He worries that Naomi will reject him and marry someone else.',0),(3,9,'He has been offered an attractive job in another country.',1),(4,9,'He knows that Chie is unaware of his feelings for Naomi.',0),(1,10,'Line 39 (“I don’t... you”)',0),(2,10,'Lines 39-42 (“Normally... community”)',1),(3,10,' Lines 58-59 (“Depending... Japan”)',0),(4,10,'Lines 72-73 (“I see... you”)',0);
+INSERT INTO `options` VALUES (1,1,'One character argues with another character\r\nwho intrudes on her home.',0),(2,1,'One character receives a surprising request from\r\nanother character.',1),(3,1,'One character reminisces about choices she has\r\nmade over the years.',0),(4,1,'One character criticizes another character for\r\npursuing an unexpected course of action.',0),(1,2,'A careful analysis of a traditional practice',0),(2,2,'A detailed depiction of a meaningful encounter',1),(3,2,'A definitive response to a series of questions',0),(4,2,'A cheerful recounting of an amusing anecdote',0),(1,3,'frankly.',0),(2,3,'confidently.',0),(3,3,'without mediation',1),(4,3,'with precision.',0),(1,4,'She will consider his proposal inappropriate.',1),(2,4,'She will mistake his earnestness for immaturity.',0),(3,4,'She will consider his unscheduled visit an imposition.',0),(4,4,'She will underestimate the sincerity of his emotions.',0),(1,5,'Line 33 (“His voice... refined”)',0),(2,5,'Lines 49-51 (“You... mind”)',0),(3,5,'Lines 63-64 (“Please... proposal”)',1),(4,5,'Lines 71-72 (“Eager... face”)',0),(1,6,'affection but not genuine love.',0),(2,6,'objectivity but not complete impartiality.',0),(3,6,'amusement but not mocking disparagement.',0),(4,6,'respect but not utter deference.',1),(1,7,'describe a culture.',0),(2,7,'criticize a tradition',0),(3,7,'question a suggestion.',0),(4,7,'analyze a reaction.',1),(1,8,'appearance.',0),(2,8,'custom.',1),(3,8,'structure.',0),(4,8,'nature.',0),(1,9,'He fears that his own parents will disapprove of Naomi.',0),(2,9,'He worries that Naomi will reject him and marry someone else.',0),(3,9,'He has been offered an attractive job in another country.',1),(4,9,'He knows that Chie is unaware of his feelings for Naomi.',0);
 /*!40000 ALTER TABLE `options` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `paragraph`
+--
 
 DROP TABLE IF EXISTS `paragraph`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -67,6 +68,10 @@ INSERT INTO `paragraph` VALUES (1,'Akira came directly, breaking all tradition. 
 /*!40000 ALTER TABLE `paragraph` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `question`
+--
+
 DROP TABLE IF EXISTS `question`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -79,7 +84,7 @@ CREATE TABLE `question` (
   PRIMARY KEY (`QUESTION_ID`),
   KEY `PARAGRAPH_ID` (`PARAGRAPH_ID`),
   CONSTRAINT `QUESTION_ibfk_1` FOREIGN KEY (`PARAGRAPH_ID`) REFERENCES `paragraph` (`PARAGRAPH_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,14 +93,17 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` VALUES (1,1,'Which choice best describes what happens in the\r\npassage?',1,'Comprehension'),(2,1,'Which choice best describes the developmental\r\npattern of the passage?',2,'Comprehension'),(3,1,'As used in line 1 and line 65, “directly” most\nnearly means',1,'Comprehension'),(4,1,'Which reaction does Akira most fear from Chie?',2,'Comprehension'),(5,1,'Which choice provides the best evidence for the answer to the previous question?',2,'Comprehension'),(6,1,'In the passage, Akira addresses Chie with',1,'Comprehension'),(7,1,'The main purpose of the first paragraph is to',3,'Comprehension'),(8,1,'As used in line 2, “form” most nearly means',1,'Comprehension'),(9,1,'Why does Akira say his meeting with Chie is',3,'Comprehension'),(10,1,'Which choice provides the best evidence for the',2,'Comprehension');
+INSERT INTO `question` VALUES (1,1,'Which choice best describes what happens in the\r\npassage?',1,'Comprehension'),(2,1,'Which choice best describes the developmental\r\npattern of the passage?',2,'Comprehension'),(3,1,'As used in line 1 and line 65, “directly” most\nnearly means',1,'Comprehension'),(4,1,'Which reaction does Akira most fear from Chie?',2,'Comprehension'),(5,1,'Which choice provides the best evidence for the answer to the previous question?',2,'Comprehension'),(6,1,'In the passage, Akira addresses Chie with',1,'Comprehension'),(7,1,'The main purpose of the first paragraph is to',3,'Comprehension'),(8,1,'As used in line 2, “form” most nearly means',1,'Comprehension'),(9,1,'Why does Akira say his meeting with Chie is',3,'Comprehension');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `result`
+--
 
 DROP TABLE IF EXISTS `result`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-
 CREATE TABLE `result` (
   `RESULT_ID` int(11) NOT NULL AUTO_INCREMENT,
   `USER_ID` bigint(20) NOT NULL,
@@ -118,6 +126,10 @@ LOCK TABLES `result` WRITE;
 INSERT INTO `result` VALUES (4,1,'2018-03-31','SIM',NULL,NULL),(5,10,'2018-03-31','SIM',NULL,NULL),(6,10,'2018-03-31','SIM',NULL,NULL);
 /*!40000 ALTER TABLE `result` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `result_line`
+--
 
 DROP TABLE IF EXISTS `result_line`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -145,6 +157,10 @@ INSERT INTO `result_line` VALUES (13,4,1,1),(14,4,2,2),(15,4,3,3),(16,4,3,4),(17
 /*!40000 ALTER TABLE `result_line` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `tbl_user`
+--
+
 DROP TABLE IF EXISTS `tbl_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -161,11 +177,13 @@ CREATE TABLE `tbl_user` (
 --
 -- Dumping data for table `tbl_user`
 --
+
 LOCK TABLES `tbl_user` WRITE;
 /*!40000 ALTER TABLE `tbl_user` DISABLE KEYS */;
 INSERT INTO `tbl_user` VALUES (1,'Test','User','test@test.com','pbkdf2:sha256:50000$'),(2,'Matt','Ball','matt@ball.com','password123'),(3,'Janel','Yousif','janel@gmail.com','pbkdf2:sha256:50000$'),(4,'test','test','test@terst.com','123456'),(5,'ben2','wyatt','testest@masidfas.com','123123123123'),(8,'test222','teest','2131231@sdfsf.com','12312312313'),(9,'test222222','teest','2131231@sdfsfsss.com','12312312313'),(10,'matt','blaul','matt@blaul.com','123456');
 /*!40000 ALTER TABLE `tbl_user` ENABLE KEYS */;
 UNLOCK TABLES;
+
 --
 -- Dumping events for database 'apostrophy'
 --
@@ -173,6 +191,27 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'apostrophy'
 --
+/*!50003 DROP FUNCTION IF EXISTS `func_checkOptionIsCorrect` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `func_checkOptionIsCorrect`(
+		optid int
+	) RETURNS int(11)
+BEGIN
+    RETURN IF((SELECT is_correct from options where option_id = optid) = 1, 1 ,0);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_authenticateUser` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -270,17 +309,24 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getResults`(IN `uid` VARCHAR(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getResults`(IN uid VARCHAR(255))
 BEGIN
-	SELECT 	result.RESULT_ID, result_line.RESULT_LINE_ID, TEST_TYPE, TEST_SKILL_LVL, TEST_AREA, RESULT_LINE.QUESTION_ID, RESULT_LINE.OPTION_ID,
-		OPTIONS.IS_CORRECT, SUM(OPTIONS.IS_CORRECT) as TOTAL_CORRECT
-    FROM result
-    LEFT JOIN result_line ON result_line.RESULT_ID = result.RESULT_ID
-    LEFT JOIN options ON options.OPTION_ID = result_line.OPTION_ID 
-    WHERE USER_ID = 10 
-    GROUP BY RESULT_ID, RESULT_LINE_ID;
+	SELECT
+	   result.result_date,
+       result_line.result_id, 
+       AVG(options.is_correct)
+       
+FROM   options 
+       JOIN result_line 
+         ON result_line.option_id = options.option_id 
+            AND options.question_id = result_line.question_id 
+       JOIN result 
+         ON result_line.result_id = result.result_id
+	   
+       WHERE user_id = uid
+GROUP  BY result_line.result_id;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -393,4 +439,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-02 16:52:05
+-- Dump completed on 2018-04-02 22:57:59

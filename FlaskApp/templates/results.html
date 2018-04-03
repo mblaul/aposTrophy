@@ -120,24 +120,14 @@
                                 </div>
                                 <div class="card-body ">
                                     <h4>
-                                        Paragraph
+                                        Results
                                     </h4>
-                                    <p>
-
-                                    </p>
+                                        <p>
+                                            {% for date, score in results %}
+                                                  {{ date }} {{ score }}<br>
+                                            {% endfor %}
+                                        </p>
                                     <hr />
-                                    <h4>
-                                        Questions
-                                    </h4>
-                                    <p>
-                                        <div class="form-group">
-                                            <form>
-
-                                                <hr>
-
-                                            </form>
-                                        </div>
-                                    </p>
                                 </div>
                                 <div class="card-footer">
                                     <hr>

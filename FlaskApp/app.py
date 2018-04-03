@@ -178,7 +178,25 @@ def submitSimExam():
 
 @app.route('/showResults')
 def showResults():
-    return render_template('results.html')
+
+    userid = str(10)
+    dates = {}
+    scores = {}
+
+    conn = mysql.connection
+    cursor = conn.cursor()
+    cursor.callproc('sp_getResults', (userid,))
+    data = cursor.fetchall()
+
+    for row in range(len(data)):
+        dates[row] = data[row][0]
+        print(dates[row])
+        scores[row] = data[row][2]
+        print(scores[row])
+
+    results = zip(dates, scores)
+
+    return render_template('results.html', results=results)
 
 @app.route('/practice', methods=['GET'])
 def showPracticeExam():
