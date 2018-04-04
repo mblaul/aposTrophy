@@ -57,11 +57,9 @@ def login():
         # If data is returned something went wrong, if data was not returned then the user was authenticated
         if authenticateUser(_email, _hashed_password):
 
-            print(_email)
             data = get_user_id(_email)
 
             #Set session variable to userid
-            print(data[0])
             session['user'] = data[0]
 
             return redirect(url_for('showDashboard'))
@@ -179,7 +177,7 @@ def submitSimExam():
 @app.route('/showResults')
 def showResults():
 
-    userid = str(10)
+    userid = str(session['user'])
     dates = {}
     scores = {}
     results = {}
