@@ -182,6 +182,7 @@ def showResults():
     userid = str(10)
     dates = {}
     scores = {}
+    results = {}
 
     conn = mysql.connection
     cursor = conn.cursor()
@@ -190,13 +191,9 @@ def showResults():
 
     for row in range(len(data)):
         dates[row] = data[row][0]
-        print(dates[row])
-        scores[row] = data[row][2]
-        print(scores[row])
+        scores[row] = "{:.2%}".format(data[row][2])
 
-    results = zip(dates, scores)
-
-    return render_template('results.html', results=results)
+    return render_template('results.html', dates=dates, scores=scores)
 
 @app.route('/practice', methods=['GET'])
 def showPracticeExam():

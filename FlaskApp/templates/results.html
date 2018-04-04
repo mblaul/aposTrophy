@@ -122,11 +122,24 @@
                                     <h4>
                                         Results
                                     </h4>
-                                        <p>
-                                            {% for date, score in results %}
-                                                  {{ date }} {{ score }}<br>
+                                        <table class="table">
+                                          <thead>
+                                            <tr>
+                                              <th scope="col">Date</th>
+                                              <th scope="col">Score</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            {% for (dkey, date) in dates.items() %}
+                                            <tr>
+                                                <td>{{ date }}</td> <td>{{ scores[dkey] }}</td>
+                                            </tr>
                                             {% endfor %}
-                                        </p>
+
+                                      </tbody>
+                                    </table>
+
+
                                     <hr />
                                 </div>
                                 <div class="card-footer">
