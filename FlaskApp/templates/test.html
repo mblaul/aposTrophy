@@ -19,27 +19,6 @@
 
     <script type="text/javascript" src="../static/js/jquery/dist/jquery.min.js"></script>
 
-    <script = "text/javascript">
-      $(function() {
-        $('#btnSubmit').click(function(event) {
-
-          $.ajax({
-            url: '/submitSimExam',
-            data: $('form').serialize(),
-            type: 'POST',
-            success: function(response){
-              console.log(response);
-              window.location = '/showResults';
-            },
-            error: function(error){
-              console.log(error);
-            }
-          });
-           event.preventDefault();
-        });
-      });
-    </script>
-
 </head>
 
 <body>
@@ -126,7 +105,7 @@
                                     </h4>
                                     <p>
                                         <div class="form-group">
-                                             <form>
+                                             <form action="{{ submitAction }}" method="post">
                                                 {% for qid, qdata in questions.items() %}
                                                     {% if pid == qdata[0] %}
                                                         {{ qdata[1] }}<br>
@@ -139,7 +118,7 @@
                                                     {% endif %}
                                                 {% endfor %}
                                          {% endfor %}
-                                            <button id="btnSubmit" type="button" class="btn btn-lg btn-primary btn-block">Submit</button>
+                                            <button id="btnSubmit" type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
                                             </form>
                                         </div>
                                     </p>

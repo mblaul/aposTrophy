@@ -117,26 +117,21 @@ def showDashboard():
         return render_template('dashboard/dashboard.html')
     else:
         return redirect(url_for('main'))
-    
-@app.route('/showSimExam')
-def showTest():
-    conn = mysql.connection
-    cursor = conn.cursor()
-    cursor.callproc('sp_generateSimExam')
-    data = cursor.fetchall()
-    
+
+
+def showTest(submitAction, data):
+
     if len(data) > 0:
         
-        #The print statement below allows you to select individual items from query
-        #data[x] where x is the row itself
-        #data[x][y] where y is the column
+        # The print statement below allows you to select individual items from query
+        # data[x] where x is the row itself
+        # data[x][y] where y is the column
         
         paragraphs = {}
         questions = {}
         options = {}
 
-        #The first row, second column is the paragraph add that to the paragraph list
-
+        # The first row, second column is the paragraph add that to the paragraph list
 
         # Loop through each row of data returned from SQL query
         for row in range(len(data)):
@@ -149,10 +144,26 @@ def showTest():
             # Add values to options dictionary { uniqueid, [qid, optid, opttext] }
             options[row] = [data[row][2], data[row][6], data[row][7]]
 
-    return render_template('test.html', paragraphs = paragraphs, questions = questions, options = options)
+        return render_template('test.html', paragraphs=paragraphs, questions=questions, options=options,
+                               submitAction=submitAction)
+
+    return redirect(url_for('showDashboard'))
 
 
-@app.route('/submitSimExam', methods=['POST'])
+@app.route('/simulation', methods=['GET'])
+def showSimExam():
+    conn = mysql.connection
+    cursor = conn.cursor()
+    cursor.callproc('sp_generateSimExam')
+    data = cursor.fetchall()
+
+    if len(data) > 0:
+        return showTest('/simulate', data)
+    else:
+        return redirect(url_for('showDashboard'))
+
+
+@app.route('/simulation', methods=['POST'])
 def submitSimExam():
 
     #Set variables for insertions into the tables
@@ -221,22 +232,24 @@ def getPracticeExam(area, skill=None):
     return cur.fetchall()
 
 
-@app.route('/practice')
+@app.route('/practice', methods=['GET'])
 def showPracticePage():
     return render_template('practice.html')
 
 
-@app.route('/practice/<area>')
 @app.route('/practice/<area>/<int:skill>', methods=['GET'])
 def showPracticeExam(area, skill=None):
+    data = getPracticeExam(area, skill)
+    if len(data) > 0:
+        return showTest('/practice/{}/{}'.format(area, skill), data)
 
-    print(getPracticeExam(area))
     return redirect(url_for('showPracticePage'))
 
 
-@app.route('/practice', methods=['POST'])
-def submitPracticeExam():
-    pass
+@app.route('/practice/<area>/<int:skill>', methods=['POST'])
+def submitPracticeExam(area, skill):
+    print("Should be submitting a practice exam for {} with skill {}".format(area, skill))
+    return redirect(url_for('showDashboard'))
 
 
 if __name__ == "__main__":
