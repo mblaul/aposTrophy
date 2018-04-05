@@ -128,21 +128,25 @@ def showTest():
         #data[x] where x is the row itself
         #data[x][y] where y is the column
         
-        paragraph = []
+        paragraphs = {}
         questions = {}
         options = {}
 
         #The first row, second column is the paragraph add that to the paragraph list
-        paragraph.append(data[0][1])
+
 
         # Loop through each row of data returned from SQL query
         for row in range(len(data)):
-            # Add values to question dictionary { qid, qtext }
-            questions[data[row][2]] = data[row][3]
-            # Add values to options dictionary { uniqueid, [qid,optid,opttext] }
+            # Add values to question dictionary { pid, ptext }
+            paragraphs[data[row][0]] = data[row][1]
+
+            # Add values to question dictionary { qid, [pid, qtext] }
+            questions[data[row][2]] = [data[row][0], data[row][3]]
+
+            # Add values to options dictionary { uniqueid, [qid, optid, opttext] }
             options[row] = [data[row][2], data[row][6], data[row][7]]
 
-    return render_template('test.html', paragraph = paragraph, questions = questions, options = options)
+    return render_template('test.html', paragraphs = paragraphs, questions = questions, options = options)
 
 
 @app.route('/submitSimExam', methods=['POST'])

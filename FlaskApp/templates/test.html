@@ -122,12 +122,13 @@
                                     <p class="card-category">This is the real deal, good luck!</p>
                                 </div>
                                 <div class="card-body ">
+                                    {% for pid, paragraph in paragraphs.items() %}
                                     <h4>
                                         Paragraph
                                     </h4>
                                     <div class="col-md-6">
                                     <p>
-                                        {{ paragraph[0] }}
+                                            {{ paragraph }}
                                     </p>
                                     </div>
                                     <hr />
@@ -137,15 +138,18 @@
                                     <p>
                                         <div class="form-group">
                                              <form>
-                                                {% for qid, question in questions.items() %}
-                                                    {{ question }}<br>
-                                                    {% for oid, optdata in options.items() %}
-                                                        {% if qid == optdata[0] %}
-                                                            <label><input type="radio" name = "{{ qid }}" value = "{{ optdata[1] }}">{{ optdata[2] }}</label> <br>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                 <hr>
+                                                {% for qid, qdata in questions.items() %}
+                                                    {% if pid == qdata[0] %}
+                                                        {{ qdata[1] }}<br>
+                                                        {% for oid, optdata in options.items() %}
+                                                            {% if qid == optdata[0] %}
+                                                                <label><input type="radio" name = "{{ qid }}" value = "{{ optdata[1] }}">{{ optdata[2] }}</label> <br>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        <br>
+                                                    {% endif %}
                                                 {% endfor %}
+                                         {% endfor %}
                                             <button id="btnSubmit" type="button" class="btn btn-lg btn-primary btn-block">Submit</button>
                                             </form>
                                         </div>
