@@ -113,7 +113,10 @@ def signUp():
         
 @app.route('/showDashboard', methods=["GET"])
 def showDashboard():
-    return render_template('dashboard/dashboard.html')
+    if 'user' in session:
+        return render_template('dashboard/dashboard.html')
+    else:
+        return redirect(url_for('main'))
     
 @app.route('/showSimExam')
 def showTest():
