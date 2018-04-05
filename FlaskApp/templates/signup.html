@@ -22,26 +22,6 @@
     margin: 0 auto;
 }
         </style>
-        
-           {#<script = "text/javascript">
-      $(function() {
-        $('#btnSignUp').click(function() {
-          
-          $.ajax({
-            url: '/signup',
-            data: $('form').serialize(),
-            type: 'POST',
-            success: function(response){
-              console.log(response);
-              window.location = '/showDashboard';
-            },
-            error: function(error){
-              console.log(error);
-            }
-          });
-        });
-      });
-    </script>#}
 	</head>
 	<body id="top">
 

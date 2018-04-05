@@ -111,7 +111,7 @@ def signUp():
         return json.dumps({'html':'<span>Please enter the required fields.</span>'})
         
         
-@app.route('/showDashboard', methods=["GET"])
+@app.route('/dashboard', methods=["GET"])
 def showDashboard():
     if 'user' in session:
         return render_template('dashboard/dashboard.html')
@@ -197,9 +197,13 @@ def showResults():
 
     return render_template('results.html', dates=dates, scores=scores)
 
-# TODO: pass in skill here
-def getPracticeExam(area):
+
+def getPracticeExam(area, skill=None):
     cur = mysql.connection.cursor()
+    limiter = 'WHERE AREA=\'{}\''.format(area)
+    if skill is not None:
+        limiter += ' AND SKILL_LVL={}'.format(skill)
+
     cur.execute('''SELECT 
             PARAGRAPH.PARAGRAPH_ID, 
             PARAGRAPH.PARAGRAPH_TEXT, 
@@ -213,17 +217,23 @@ def getPracticeExam(area):
         FROM apostrophy.PARAGRAPH
         RIGHT JOIN apostrophy.QUESTION ON QUESTION.PARAGRAPH_ID = PARAGRAPH.PARAGRAPH_ID
         RIGHT JOIN apostrophy.OPTIONS ON OPTIONS.QUESTION_ID = QUESTION.QUESTION_ID
-        WHERE AREA=\'{}'
-        ORDER BY apostrophy.QUESTION.QUESTION_ID ASC;'''.format(area))
+        {}
+        ORDER BY apostrophy.QUESTION.QUESTION_ID ASC;'''.format(limiter))
     return cur.fetchall()
 
-@app.route('/practice', methods=['GET'])
-def showPracticeExam():
-    # For now just going with a hardcoded skill, TODO: make this part of the URL
-    skill = 'Grammar'
 
-    print(getPracticeExam(skill))
-    return redirect(url_for('main'))
+@app.route('/practice')
+def showPracticePage():
+    return render_template('practice.html')
+
+
+@app.route('/practice/<area>')
+@app.route('/practice/<area>/<int:skill>', methods=['GET'])
+def showPracticeExam(area, skill=None):
+
+    print(getPracticeExam(area))
+    return redirect(url_for('showPracticePage'))
+
 
 @app.route('/practice', methods=['POST'])
 def submitPracticeExam():
