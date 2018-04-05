@@ -178,7 +178,7 @@ def submitSimExam():
 
     return json.dumps({'Code':'Success!'})
 
-@app.route('/showResults')
+@app.route('/results')
 def showResults():
 
     userid = str(session['user'])
