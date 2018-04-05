@@ -77,8 +77,8 @@ def getsession():
 @app.route('/logout')
 def logout():
    # remove the username from the session if it is there
-   session.pop('username', None)
-   return redirect(url_for('index'))
+   session.pop('user', None)
+   return redirect(url_for('main'))
 
 @app.route('/signup', methods=['GET'])
 def showSignUp():
