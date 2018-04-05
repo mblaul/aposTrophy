@@ -137,21 +137,10 @@ def showTest():
 
         # Loop through each row of data returned from SQL query
         for row in range(len(data)):
-            # Add
+            # Add values to question dictionary { qid, qtext }
             questions[data[row][2]] = data[row][3]
-
+            # Add values to options dictionary { uniqueid, [qid,optid,opttext] }
             options[row] = [data[row][2], data[row][6], data[row][7]]
-
-
-        for qid, qtext in questions.items():
-            print(qid, qtext)
-
-        for oid, optdata in options.items():
-            print(optdata[0])
-            print(optdata[1])
-            print(optdata[2])
-
-
 
     return render_template('test.html', paragraph = paragraph, questions = questions, options = options)
 
