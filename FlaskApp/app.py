@@ -150,6 +150,28 @@ def showTest(submitAction, data):
     return redirect(url_for('showDashboard'))
 
 
+def submitTest(type, skill, area, form):
+    # Set variables for insertions into the tables
+    userid = str(session['user'])
+
+    # Create a new result entry
+    conn = mysql.connection
+    cursor = conn.cursor()
+    cursor.callproc('sp_newResult', (userid, type, skill, area))
+    # data = cursor.fetchall()
+    mysql.connection.commit()
+
+    # Create result lines for each selection
+    for selection in form:
+        conn = mysql.connection
+        cursor = conn.cursor()
+        cursor.callproc('sp_newResultLine', (form.get(selection), str(selection)))
+        # data = cursor.fetchall()
+        mysql.connection.commit()
+
+    return json.dumps({'Code':'Success!'})
+
+
 @app.route('/simulation', methods=['GET'])
 def showSimExam():
     conn = mysql.connection
@@ -165,29 +187,8 @@ def showSimExam():
 
 @app.route('/simulation', methods=['POST'])
 def submitSimExam():
-
-    #Set variables for insertions into the tables
-    userid = str(session['user'])
-    testtype = 'SIM'
-    testskilllevel = None
-    testarea = None
-
-    #Create a new result entry
-    conn = mysql.connection
-    cursor = conn.cursor()
-    cursor.callproc('sp_newResult', (userid, testtype, testskilllevel, testarea))
-    data = cursor.fetchall()
-    mysql.connection.commit()
-
-    #Create result lines for each selection
-    for selection in request.form:
-        conn = mysql.connection
-        cursor = conn.cursor()
-        cursor.callproc('sp_newResultLine', (request.form.get(selection), str(selection)))
-        data = cursor.fetchall()
-        mysql.connection.commit()
-
-    return json.dumps({'Code':'Success!'})
+    submitTest('SIM', None, None, request.form)
+    return redirect(url_for('showDashboard'))
 
 @app.route('/results')
 def showResults():
@@ -248,7 +249,7 @@ def showPracticeExam(area, skill=None):
 
 @app.route('/practice/<area>/<int:skill>', methods=['POST'])
 def submitPracticeExam(area, skill):
-    print("Should be submitting a practice exam for {} with skill {}".format(area, skill))
+    submitTest('PRAC', skill, area, request.form)
     return redirect(url_for('showDashboard'))
 
 
