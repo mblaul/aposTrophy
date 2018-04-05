@@ -125,25 +125,27 @@
                                     <h4>
                                         Paragraph
                                     </h4>
+                                    <div class="col-md-6">
                                     <p>
                                         {{ paragraph[0] }}
                                     </p>
+                                    </div>
                                     <hr />
                                     <h4>
                                         Questions
                                     </h4>
                                     <p>
                                         <div class="form-group">
-                                            <form>
-                                                {% for qid, qtext in question.items() %}
-                                                    {{ qtext }} <br>
-                                                    {% for optid, optext in option.items() %}
-                                                            {% if optid[0]|string == qid|string %}
-                                                                <label><input type="radio" name = "{{ qid }}" value = "{{ optid[1:] }}">{{ optext }}</label> <br>
-                                                            {% endif %}
+                                             <form>
+                                                {% for qid, question in questions.items() %}
+                                                    {{ question }}<br>
+                                                    {% for oid, optdata in options.items() %}
+                                                        {% if qid == optdata[0] %}
+                                                            <label><input type="radio" name = "{{ qid }}" value = "{{ optdata[1] }}">{{ optdata[2] }}</label> <br>
+                                                        {% endif %}
                                                     {% endfor %}
-                                                <hr>
-                                            {% endfor %}
+                                                 <hr>
+                                                {% endfor %}
                                             <button id="btnSubmit" type="button" class="btn btn-lg btn-primary btn-block">Submit</button>
                                             </form>
                                         </div>
