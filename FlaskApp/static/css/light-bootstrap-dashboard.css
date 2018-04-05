@@ -288,6 +288,13 @@ input:focus {
     height: 100vh;
 }
 
+.sidebar img {
+    position: absolute;
+    margin-left:25px;
+    margin-right:25px;
+    bottom: 0;
+}
+
 .page-header .page-header-image {
     background-position: center center;
     background-size: cover;
