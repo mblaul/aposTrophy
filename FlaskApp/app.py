@@ -190,9 +190,33 @@ def showResults():
 
     return render_template('results.html', dates=dates, scores=scores)
 
+# TODO: pass in skill here
+def getPracticeExam(area):
+    cur = mysql.connection.cursor()
+    cur.execute('''SELECT 
+            PARAGRAPH.PARAGRAPH_ID, 
+            PARAGRAPH.PARAGRAPH_TEXT, 
+            QUESTION.QUESTION_ID, 
+            QUESTION.QUESTION_TEXT, 
+            QUESTION.SKILL_LVL, 
+            QUESTION.AREA, 
+            OPTIONS.OPTION_ID, 
+            OPTIONS.OPTION_TEXT, 
+            OPTIONS.IS_CORRECT
+        FROM apostrophy.PARAGRAPH
+        RIGHT JOIN apostrophy.QUESTION ON QUESTION.PARAGRAPH_ID = PARAGRAPH.PARAGRAPH_ID
+        RIGHT JOIN apostrophy.OPTIONS ON OPTIONS.QUESTION_ID = QUESTION.QUESTION_ID
+        WHERE AREA=\'{}'
+        ORDER BY apostrophy.QUESTION.QUESTION_ID ASC;'''.format(area))
+    return cur.fetchall()
+
 @app.route('/practice', methods=['GET'])
 def showPracticeExam():
-    pass
+    # For now just going with a hardcoded skill, TODO: make this part of the URL
+    skill = 'Grammar'
+
+    print(getPracticeExam(skill))
+    return redirect(url_for('main'))
 
 @app.route('/practice', methods=['POST'])
 def submitPracticeExam():
