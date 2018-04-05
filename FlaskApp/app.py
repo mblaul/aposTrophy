@@ -217,8 +217,7 @@ def getPracticeExam(area, skill=None):
         FROM apostrophy.PARAGRAPH
         RIGHT JOIN apostrophy.QUESTION ON QUESTION.PARAGRAPH_ID = PARAGRAPH.PARAGRAPH_ID
         RIGHT JOIN apostrophy.OPTIONS ON OPTIONS.QUESTION_ID = QUESTION.QUESTION_ID
-        {}
-        ORDER BY apostrophy.QUESTION.QUESTION_ID ASC;'''.format(limiter))
+        {} ORDER BY apostrophy.QUESTION.QUESTION_ID ASC;'''.format(limiter))
     return cur.fetchall()
 
 
