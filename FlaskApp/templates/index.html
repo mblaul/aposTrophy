@@ -13,25 +13,28 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
         
         <style>
-.responsive {
-    width: 100%;
-    height: auto;
-}       
-        
+            .responsive {
+                width: 100%;
+                height: auto;
+            }
+
             .bannerImage .btn {
-  position: absolute;
-  top: 60%;
-  left: 10%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  background-color: #D83A4A;
-  color: white;
-  font-size: 16px;
-  padding: 12px 24px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
+                position: absolute;
+                top: 80%;
+                left: 50%;
+                width: 15%;
+                height: 15%;
+                transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                background-color: #D83A4A;
+                color: white;
+                font-size: 30px;
+                padding: 12px 24px;
+                text-overflow: ellipsis;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+            }
         </style>
 	</head>
 	<body class="homepage" id="top">
@@ -42,7 +45,7 @@
 						
 					<!-- Logo -->
 						<div id="logo">
-							<h1><img src="../static/img/trophy.png" width="50px"><a href="/">aposTrophy</a></h1>
+							<h1><img src="/static/img/trophy.png" width="50px"><a href="/">aposTrophy</a></h1>
 						</div>
 					
 					<!-- Nav -->
@@ -50,8 +53,8 @@
 							<ul>
 								<li class="active"><a href="/">Home</a></li>
                                 {% if not loggedIn %}
-								<li><a href="login">Login</a></li>
-								<li><a href="signup">Signup</a></li>
+								<li><a href="/login">Login</a></li>
+								<li><a href="/signup">Signup</a></li>
                                 {% else %}
                                 <li><a href="/dashboard">Go to Dashboard</a> </li>
                                 {% endif %}
@@ -61,8 +64,15 @@
         </div>
 
         <div class="bannerImage">
-	<img src="../static/img/test.png" class="responsive">
-            <button class="btn" href="signup">Sign up today</button>
+            <img src="../static/img/test.png" class="responsive">
+            <a href={{ '/dashboard' if loggedIn else '/signup' }}>
+            <button class="btn">
+                {% if loggedIn %}
+                    Go to dashboard
+                {% else %}
+                    Sign up today!
+                {% endif %}
+                </button></a>
         </div>
 
 		<!-- Featured -->
