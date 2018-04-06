@@ -225,7 +225,6 @@ def showResults():
     if verify:
         return verify
     else:
-        print(str(session['user']))
         userid = str(session['user'])
         dates = {}
         scores = {}
@@ -236,8 +235,6 @@ def showResults():
         cursor = conn.cursor()
         cursor.callproc('sp_getResults', (userid,))
         data = cursor.fetchall()
-
-        print(data)
 
         for row in range(len(data)):
             dates[row] = data[row][0]
@@ -302,6 +299,23 @@ def submitPracticeExam(area, skill):
     else:
         submitTest('PRAC', skill, area, request.form)
         return redirect(url_for('showDashboard'))
+
+@app.route('/review', methods=['GET'])
+def showReview():
+    verify = verifyUserSession('showSimExam')
+    if verify:
+        return verify
+    else:
+        conn = mysql.connection
+        cursor = conn.cursor()
+        cursor.callproc('sp_generateSimExam')
+        data = cursor.fetchall()
+
+        if len(data) > 0:
+            return showTest(False, '/simulation', data)
+        else:
+            return redirect(url_for('showDashboard'))
+
 
 
 if __name__ == "__main__":
