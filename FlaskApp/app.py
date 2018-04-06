@@ -216,7 +216,7 @@ def submitSimExam():
     if not userLoggedIn():
         return redirect(url_for('main'))
     else:
-        submitTest('SIM', None, None, request.form)
+        submitTest('SIM', None, "ALL", request.form)
         return redirect(url_for('showDashboard'))
 
 @app.route('/results')
@@ -228,7 +228,8 @@ def showResults():
         userid = str(session['user'])
         dates = {}
         scores = {}
-        results = {}
+        types = {}
+        areas = {}
 
         conn = mysql.connection
         cursor = conn.cursor()
@@ -237,7 +238,9 @@ def showResults():
 
         for row in range(len(data)):
             dates[row] = data[row][0]
-            scores[row] = "{:.2%}".format(data[row][2])
+            types[row] = data[row][2]
+            areas[row] = data[row][3]
+            scores[row] = "{:.2%}".format(data[row][4])
 
         return render_template('results.html', dates=dates, scores=scores)
 

@@ -53,16 +53,10 @@
                         aposTrophy
                     </a>
                 </div>
-                <ul class="nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/dashboard">
-                            <i class="nc-icon nc-chart-pie-35"></i>
-                            <p>Home</p>
-                        </a>
-                    </li>
+              <ul class="nav">
                     <li>
                         <a class="nav-link" href="./user">
-                            <i class="nc-icon nc-circle-09"></i>
+                            <i class="nc-icon nc-satisfied"></i>
                             <p>User Profile</p>
                         </a>
                     </li>
@@ -73,8 +67,14 @@
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link active" href="./results">
-                            <i class="nc-icon nc-circle-09"></i>
+                        <a class="nav-link" href="./simulation">
+                            <i class="nc-icon nc-ruler-pencil"></i>
+                            <p>Simulation Exam</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="./results">
+                            <i class="nc-icon nc-check-2"></i>
                             <p>Results</p>
                         </a>
                     </li>
@@ -112,14 +112,16 @@
                                         <table class="table">
                                           <thead>
                                             <tr>
-                                              <th scope="col">Date</th>
-                                              <th scope="col">Score</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Type</th>
+                                                <th scope="col">Area</th>
+                                                <th scope="col">Score</th>
                                             </tr>
                                           </thead>
                                           <tbody>
                                             {% for (dkey, date) in dates.items() %}
                                             <tr>
-                                                <td>{{ date }}</td> <td>{{ scores[dkey] }}</td>
+                                                <td>{{ date }}</td><td>{{ types[key] }}</td><td>{{ areas[key] }}</td><td>{{ scores[key] }}</td>
                                             </tr>
                                             {% endfor %}
 
