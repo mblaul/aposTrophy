@@ -206,7 +206,7 @@ def showSimExam():
         data = cursor.fetchall()
 
         if len(data) > 0:
-            return showTest(False, '/simulate', data)
+            return showTest(False, '/simulation', data)
         else:
             return redirect(url_for('showDashboard'))
 
@@ -225,6 +225,7 @@ def showResults():
     if verify:
         return verify
     else:
+        print(str(session['user']))
         userid = str(session['user'])
         dates = {}
         scores = {}
@@ -236,13 +237,15 @@ def showResults():
         cursor.callproc('sp_getResults', (userid,))
         data = cursor.fetchall()
 
+        print(data)
+
         for row in range(len(data)):
             dates[row] = data[row][0]
             types[row] = data[row][2]
             areas[row] = data[row][3]
             scores[row] = "{:.2%}".format(data[row][4])
 
-        return render_template('results.html', dates=dates, scores=scores)
+        return render_template('results.html', dates=dates, scores=scores, types=types, areas=areas)
 
 
 def getPracticeExam(area, skill=None):
