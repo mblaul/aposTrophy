@@ -55,7 +55,13 @@
 						<!-- Content -->
 							<div id="content" class="12u">
 								<section>
-						  <form class="form-signin" action="/login" method="post">
+						  <form class="form-signin"
+                                {% if redir %}
+                                action="/login?redir={{ redir }}"
+                                {% else %}
+                                  action="/login"
+                                {% endif %}
+                                method="post">
 							<!-- Basic Demographic Fields -->
 									<div class="row 50%">
 									<div class="12u">
