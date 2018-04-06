@@ -33,6 +33,7 @@ def verifyUserSession(redir_method=None):
 
 @app.route("/")
 def main():
+    authenticateUser('matt@blaul.com', '123456')
     loggedIn = userLoggedIn()
     return render_template('index.html', loggedIn=loggedIn)
 
@@ -45,10 +46,10 @@ def showLogIn():
 
 def authenticateUser(email, password):
     cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT user_username, user_password FROM tbl_user WHERE user_username=\'{}\' AND user_password=\'{}\''''.format(email, password))
+    cursor.execute('''SELECT user_username, user_password FROM tbl_user WHERE user_username=\'{}\''''.format(email))
     rv = cursor.fetchall()
     if len(rv) > 0:
-        return True
+        return check_password_hash(rv[0][1], password)
     else:
         return False
 
@@ -69,10 +70,9 @@ def login():
     
     # Validate values
     if _email and _password:
-        _hashed_password = _password # TODO: HASH THE PASSWORD HERE!!!!
 
         # If data is returned something went wrong, if data was not returned then the user was authenticated
-        if authenticateUser(_email, _hashed_password):
+        if authenticateUser(_email, _password):
 
             data = get_user_id(_email)
 
@@ -115,11 +115,11 @@ def signUp():
     # Validate values
     if _fname and _lname and _email and _password:
 
-        # TODO: Hash the password here!!!!
+        _hashed_pass = generate_password_hash(_password)
 
         conn = mysql.connection
         cursor = conn.cursor()
-        cursor.callproc('sp_createUser',(_fname, _lname, _email, _password))
+        cursor.callproc('sp_createUser',(_fname, _lname, _email, _hashed_pass))
         data = cursor.fetchall()
 
         # If data is returned something went wrong, if data was not returned then the user was created
