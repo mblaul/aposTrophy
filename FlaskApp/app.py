@@ -245,22 +245,56 @@ def showResults():
         return render_template('results.html', dates=dates, scores=scores, types=types, areas=areas)
 
 
-@app.route('/review/<resultid>', methods=['GET'])
+@app.route('/review', methods=['GET'])
 def showReview():
-    formt = '/result/{}.format(resultid)'
 
-    verify = verifyUserSession(formt)
-    if verify:
-        return verify
-    else:
+    # /<resultid>
+    # formt = '/result/{}.format(resultid)'
 
+    # verify = verifyUserSession(formt)
+    # if verify:
+    #     return verify
+    # else:
 
+        data = []
 
+        cur = mysql.connection.cursor()
+        cur.execute(
+            '''
+            SELECT * FROM result_line
+            WHERE result_id = 10
+            ORDER by question_id ASC
+            '''
+        )
+        userdata = list(cur.fetchall())
 
-        if len(data) > 0:
-            return showTest(False, '/simulation', data)
-        else:
-            return redirect(url_for('showDashboard'))
+        cur.execute('''SELECT  PARAGRAPH.PARAGRAPH_ID, 
+                    PARAGRAPH.PARAGRAPH_TEXT, 
+                    QUESTION.QUESTION_ID, 
+                    QUESTION.QUESTION_TEXT, 
+                    QUESTION.SKILL_LVL, 
+                    QUESTION.AREA, 
+                    OPTIONS.OPTION_ID, 
+                    OPTIONS.OPTION_TEXT, 
+                    OPTIONS.IS_CORRECT
+                    
+                    FROM    apostrophy.PARAGRAPH
+                    RIGHT JOIN apostrophy.QUESTION ON QUESTION.PARAGRAPH_ID = PARAGRAPH.PARAGRAPH_ID
+                    RIGHT JOIN apostrophy.OPTIONS ON OPTIONS.QUESTION_ID = QUESTION.QUESTION_ID
+                    ORDER BY apostrophy.QUESTION.QUESTION_ID ASC;
+                    '''
+        )
+        testdata = list(cur.fetchall())
+
+        for testrow in range(len(testdata)):
+            for userrow in range(len(userdata)):
+                if userdata[userrow][3] == testdata[testrow][2]:
+                    data.append(testdata[testrow])
+
+        # if len(data) > 0:
+        #     return showTest(False, '/simulation', data)
+        # else:
+        return showTest(False, '/simulation', data)
 
 
 def getPracticeExam(area, skill=None):
