@@ -144,16 +144,13 @@ def showDashboard():
 def showTest(isPractice, submitAction, data):
 
     if len(data) > 0:
-        
-        # The print statement below allows you to select individual items from query
-        # data[x] where x is the row itself
-        # data[x][y] where y is the column
-        
+
         paragraphs = {}
         questions = {}
         options = {}
 
-        # The first row, second column is the paragraph add that to the paragraph list
+        # data[x] where x is the row itself
+        # data[x][y] where y is the column
 
         # Loop through each row of data returned from SQL query
         for row in range(len(data)):
@@ -294,7 +291,30 @@ def showReview():
         # if len(data) > 0:
         #     return showTest(False, '/simulation', data)
         # else:
-        return showTest(False, '/simulation', data)
+
+        paragraphs = {}
+        questions = {}
+        options = {}
+        useroptions = {}
+        # data[x] where x is the row itself
+        # data[x][y] where y is the column
+
+        # Loop through each row of data returned from SQL query
+        for row in range(len(data)):
+        # Add values to question dictionary { pid, ptext }
+            paragraphs[data[row][0]] = data[row][1]
+
+            # Add values to question dictionary { qid, [pid, qtext] }
+            questions[data[row][2]] = [data[row][0], data[row][3]]
+
+            # Add values to options dictionary { uniqueid, [qid, optid, opttext, is_correct] }
+            options[row] = [data[row][2], data[row][6], data[row][7], data[row][8]]
+
+
+        return render_template('review.html', paragraphs=paragraphs, questions=questions, options=options, userdata=userdata, submitAction=None, isPractice=None)
+
+
+
 
 
 def getPracticeExam(area, skill=None):
