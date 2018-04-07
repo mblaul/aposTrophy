@@ -259,7 +259,7 @@ def showReview():
         cur.execute(
             '''
             SELECT * FROM result_line
-            WHERE result_id = 10
+            WHERE result_id = 7
             ORDER by question_id ASC
             '''
         )

@@ -87,13 +87,7 @@
                         <div class="col-md-12">
                             <div class="card ">
                                 <div class="card-header ">
-                                    <h2 class="card-title" style="font-weight:bold">{{ 'Practice' if isPractice else 'Simulation' }} Exam</h2>
-                                    {% if not isPractice %}
-                                    <p class="card-category">This is the real deal, good luck!</p>
-                                    {% else %}
-                                    <p class="card-category">It's just practice, take your time!</p>
-                                    {% endif %}
-                                </div>
+                                    <h2 class="card-title" style="font-weight:bold">Review Previous Exam</h2>
                                 <div class="card-body ">
                                     {% for pid, paragraph in paragraphs.items() %}
                                     <h4>
@@ -110,7 +104,7 @@
                                     </h4>
                                     <p>
                                         <div class="form-group">
-                                            <form action="{{ submitAction }}" method="post">
+                                            <form>
                                                 {% for qid, qdata in questions.items() %}
                                                     {% if pid == qdata[0] %}
                                                     <strong>{{ qdata[1] }}</strong><br>
@@ -118,20 +112,32 @@
                                                             {% if qid == optdata[0] %}
                                                                 {% if optdata[3] == 1 %}
                                                                     <div class = "col-md-6 bg-success text-white">
-                                                                        {{ optdata[2] }}<br>
+                                                                         	&#x2714; {{ optdata[2] }}<br>
                                                                     </div>
                                                                 {% else %}
+                                                                    {% for userrow in userdata %}
                                                                     <div>
-                                                                        {{ optdata[2] }}<br>
+                                                                        {% if userrow[3] == qid %}
+                                                                            {% if userrow[2] == optdata[1] %}
+                                                                            <div class = "col-md-6 bg-danger text-white">
+                                                                                &#x2718; {{ optdata[2] }}<br>
+                                                                            </div>
+                                                                            {% else %}
+                                                                                &bull; {{ optdata[2] }}<br>
+                                                                            {% endif %}
+                                                                        {% endif %}
+                                                                     {% endfor %}
+
                                                                     </div>
+
                                                                 {% endif %}
                                                             {% endif %}
                                                         {% endfor %}
                                                         <br>
                                                     {% endif %}
+                                                <hr>
                                                 {% endfor %}
                                     {% endfor %}
-                                            <button id="btnSubmit" type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
                                             </form>
                                         </div>
                                     </p>
