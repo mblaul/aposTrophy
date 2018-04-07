@@ -88,7 +88,7 @@
                                     <h2 class="card-title" style="font-weight:bold">Results</h2>
                                     <p class="card-category">Here's how you did.</p>
                                 </div>
-                                <div class="card-body ">
+                                <div class="card-body col-md-10">
                                         <table class="table">
                                           <thead>
                                             <tr>
@@ -96,12 +96,13 @@
                                                 <th scope="col">Type</th>
                                                 <th scope="col">Area</th>
                                                 <th scope="col">Score</th>
+                                                <th></th>
                                             </tr>
                                           </thead>
                                           <tbody>
                                             {% for (key, date) in dates.items() %}
                                             <tr>
-                                                <td>{{ date }}</td><td>{{ types[key] }}</td><td>{{ areas[key] }}</td><td>{{ scores[key] }}</td>
+                                                <td>{{ date }}</td><td>{{ types[key] }}</td><td>{{ areas[key] }}</td><td>{{ scores[key] }}</td><td><button type="button" value="{{ resids[key] }}" class="btn btn-info">View</button></td>
                                             </tr>
                                             {% endfor %}
 

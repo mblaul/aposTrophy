@@ -116,7 +116,7 @@
                                                                     </div>
                                                                 {% else %}
                                                                     {% for userrow in userdata %}
-                                                                    <div>
+
                                                                         {% if userrow[3] == qid %}
                                                                             {% if userrow[2] == optdata[1] %}
                                                                             <div class = "col-md-6 bg-danger text-white">
@@ -128,14 +128,11 @@
                                                                         {% endif %}
                                                                      {% endfor %}
 
-                                                                    </div>
-
                                                                 {% endif %}
                                                             {% endif %}
                                                         {% endfor %}
                                                         <br>
                                                     {% endif %}
-                                                <hr>
                                                 {% endfor %}
                                     {% endfor %}
                                             </form>

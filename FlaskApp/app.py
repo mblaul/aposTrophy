@@ -224,6 +224,7 @@ def showResults():
     else:
         userid = str(session['user'])
         dates = {}
+        resids = {}
         scores = {}
         types = {}
         areas = {}
@@ -235,11 +236,12 @@ def showResults():
 
         for row in range(len(data)):
             dates[row] = data[row][0]
+            resids[row] = data[row][1]
             types[row] = data[row][2]
             areas[row] = data[row][3]
             scores[row] = "{:.2%}".format(data[row][4])
 
-        return render_template('results.html', dates=dates, scores=scores, types=types, areas=areas)
+        return render_template('results.html', dates=dates, scores=scores, types=types, areas=areas, resids=resids)
 
 
 @app.route('/review', methods=['GET'])
@@ -248,10 +250,10 @@ def showReview():
     # /<resultid>
     # formt = '/result/{}.format(resultid)'
 
-    # verify = verifyUserSession(formt)
-    # if verify:
-    #     return verify
-    # else:
+    verify = verifyUserSession('/review')
+    if verify:
+        return verify
+    else:
 
         data = []
 
@@ -281,21 +283,18 @@ def showReview():
                     ORDER BY apostrophy.QUESTION.QUESTION_ID ASC;
                     '''
         )
-        testdata = list(cur.fetchall())
+        data = list(cur.fetchall())
 
-        for testrow in range(len(testdata)):
+        for testrow in range(len(data)):
             for userrow in range(len(userdata)):
-                if userdata[userrow][3] == testdata[testrow][2]:
-                    data.append(testdata[testrow])
-
-        # if len(data) > 0:
-        #     return showTest(False, '/simulation', data)
-        # else:
+                if userdata[userrow][3] == data[testrow][2]:
+                    data.append(data[testrow])
 
         paragraphs = {}
         questions = {}
         options = {}
         useroptions = {}
+
         # data[x] where x is the row itself
         # data[x][y] where y is the column
 
@@ -312,9 +311,6 @@ def showReview():
 
 
         return render_template('review.html', paragraphs=paragraphs, questions=questions, options=options, userdata=userdata, submitAction=None, isPractice=None)
-
-
-
 
 
 def getPracticeExam(area, skill=None):
