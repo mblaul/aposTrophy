@@ -245,6 +245,24 @@ def showResults():
         return render_template('results.html', dates=dates, scores=scores, types=types, areas=areas)
 
 
+@app.route('/review/<resultid>', methods=['GET'])
+def showReview():
+    formt = '/result/{}.format(resultid)'
+
+    verify = verifyUserSession(formt)
+    if verify:
+        return verify
+    else:
+
+
+
+
+        if len(data) > 0:
+            return showTest(False, '/simulation', data)
+        else:
+            return redirect(url_for('showDashboard'))
+
+
 def getPracticeExam(area, skill=None):
     cur = mysql.connection.cursor()
     limiter = 'WHERE AREA=\'{}\''.format(area)
@@ -299,23 +317,6 @@ def submitPracticeExam(area, skill):
     else:
         submitTest('PRAC', skill, area, request.form)
         return redirect(url_for('showDashboard'))
-
-@app.route('/review', methods=['GET'])
-def showReview():
-    verify = verifyUserSession('showSimExam')
-    if verify:
-        return verify
-    else:
-        conn = mysql.connection
-        cursor = conn.cursor()
-        cursor.callproc('sp_generateSimExam')
-        data = cursor.fetchall()
-
-        if len(data) > 0:
-            return showTest(False, '/simulation', data)
-        else:
-            return redirect(url_for('showDashboard'))
-
 
 
 if __name__ == "__main__":
