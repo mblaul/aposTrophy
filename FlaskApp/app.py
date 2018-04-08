@@ -286,7 +286,7 @@ def showResults():
     if verify:
         return verify
     else:
-        userid = str(session['user'])
+        userid = session['user']
         dates = {}
         resids = {}
         scores = {}
@@ -428,6 +428,11 @@ def submitPracticeExam(area, skill):
     else:
         submitTest('PRAC', skill, area, request.form)
         return redirect(url_for('showResults'))
+
+
+@app.route('/user', methods=['GET'])
+def showUser():
+    return render_template('user.html')
 
 
 if __name__ == "__main__":
