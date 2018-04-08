@@ -33,7 +33,9 @@ def verifyUserSession(redir_method=None):
 
 @app.route("/")
 def main():
-    authenticateUser('matt@blaul.com', '123456')
+
+    print(getPracTestAvg('Grammar', 1))  # TODO removeme
+
     loggedIn = userLoggedIn()
     return render_template('index.html', loggedIn=loggedIn)
 
@@ -57,7 +59,12 @@ def authenticateUser(email, password):
 def get_user_id(email):
     cur = mysql.connection.cursor()
     cur.execute('''SELECT user_id FROM tbl_user WHERE user_username=\'{}\''''.format(email))
-    return cur.fetchone()
+
+    ID = cur.fetchone()
+    if len(ID) > 0:
+        return ID[0]
+    else:
+        return None
 
 
 @app.route('/login', methods=['POST'])
@@ -74,10 +81,8 @@ def login():
         # If data is returned something went wrong, if data was not returned then the user was authenticated
         if authenticateUser(_email, _password):
 
-            data = get_user_id(_email)
-
             # Set session variable to userid
-            session['user'] = data[0]
+            session['user'] = get_user_id(_email)
 
             if redir_method:
                 return redirect(url_for(redir_method))
@@ -130,14 +135,69 @@ def signUp():
             return json.dumps({'error':str(data[0])})
     else:
         return json.dumps({'html':'<span>Please enter the required fields.</span>'})
-        
-        
+
+
+def getPracTestAvg(area, skill):
+
+    uid = get_user_id('testy@test.com') # session['user'])
+
+    cursor = mysql.connection.cursor()
+
+    cursor.execute('''SELECT result.TEST_AREA, result.TEST_SKILL_LVL, AVG(options.is_correct)     
+          FROM options JOIN result_line 
+            ON result_line.option_id = options.option_id 
+            AND options.question_id = result_line.question_id 
+       JOIN result 
+         ON result_line.result_id = result.result_id
+       WHERE RESULT.TEST_TYPE='PRAC' AND RESULT.TEST_AREA={} AND RESULT.TEST_SKILL_LVL={} AND result.user_id={} GROUP BY result.RESULT_ID;
+        '''.format(area, skill, uid))
+#
+    ret = cursor.fetchall()
+    print(ret)
+    return ret
+
+
+
 @app.route('/dashboard', methods=["GET"])
 def showDashboard():
     verify = verifyUserSession('showDashboard')
     if verify:
         return verify
     else:
+        # Let's suggest some tests to take
+
+        cursor = mysql.connection.cursor()
+
+        # The lowest skill not completed for each area
+        lowestArea = {'Grammar': 1, 'Comprehension': 1}
+
+        for area in lowestArea.keys():
+
+            cursor.execute('''
+                    SELECT TEST_SKILL_LVL
+                    FROM result
+                    WHERE TEST_TYPE='PRAC' AND TEST_AREA={}
+                    ORDER BY TEST_SKILL_LVL ASC
+                    '''.format(area))
+
+            # Look at the score for each area's skill level. If the avg score is below a certain threshold, recommend it
+            data = cursor.fetchall()
+            datalen = len(data)
+            if datalen > 0:
+                # They've at least practiced something, suggest the next test to take
+                for skill in range(1, 4):
+                    if skill in data:  # TODO: may be problematic, may have to loop through each row manually
+                        lowestArea[area] = skill + 1
+                    else:
+                        # They didn't take this one, recommend it and get out of here
+                        lowestArea[area] = skill
+                        break
+            else:
+                # They never practiced! Nothing to do here, just suggest the first skill
+                pass
+
+        print("Suggesting to take Grammar")
+
         return render_template('dashboard/dashboard.html')
 
 
