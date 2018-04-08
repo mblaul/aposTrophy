@@ -34,7 +34,7 @@ def verifyUserSession(redir_method=None):
 @app.route("/")
 def main():
 
-    print(getPracTestAvg('Grammar', 1))  # TODO removeme
+    # print(getPracTestAvg('Grammar', 1))  # TODO removeme
 
     loggedIn = userLoggedIn()
     return render_template('index.html', loggedIn=loggedIn)
@@ -115,6 +115,7 @@ def signUp():
     # Read vlaues from UI
     _fname = request.form['inputFName']
     _lname = request.form['inputLName']
+    _school = request.form['inputSchool']
     _email = request.form['inputEmail']
     _password = request.form['inputPassword']
     
@@ -125,7 +126,7 @@ def signUp():
 
         conn = mysql.connection
         cursor = conn.cursor()
-        cursor.callproc('sp_createUser',(_fname, _lname, _email, _hashed_pass))
+        cursor.callproc('sp_createUser',(_fname, _lname, _email, _hashed_pass, _school))
         data = cursor.fetchall()
 
         # If data is returned something went wrong, if data was not returned then the user was created
@@ -199,7 +200,7 @@ def showDashboard():
                 # They never practiced! Nothing to do here, just suggest the first skill
                 pass
 
-        print("Suggesting to take Grammar")
+        #print('Suggesting to take Grammar')
 
         return render_template('dashboard/dashboard.html')
 
@@ -432,7 +433,27 @@ def submitPracticeExam(area, skill):
 
 @app.route('/user', methods=['GET'])
 def showUser():
-    return render_template('user.html')
+    verify = verifyUserSession('/user')
+
+    if verify:
+        return verify
+    else:
+
+        user = {}
+
+        cur = mysql.connection.cursor()
+        cur.execute('''
+                          SELECT *
+                          FROM tbl_user
+                          WHERE user_id = 10
+                    ''')
+
+        data = cur.fetchall()
+
+        for row in range(len(data)):
+            user[row] = [data[row][1], data[row][2], data[row][5]]
+
+        return render_template('user.html',user=user)
 
 
 if __name__ == "__main__":
