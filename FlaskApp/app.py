@@ -61,7 +61,7 @@ def get_user_id(email):
     cur.execute('''SELECT user_id FROM tbl_user WHERE user_username=\'{}\''''.format(email))
 
     ID = cur.fetchall()
-    print(ID)
+
     if len(ID) > 0:
         return ID[0]
     else:
@@ -154,7 +154,6 @@ def getPracTestAvg(area, skill):
                     '''.format(area, skill, uid))
 
     ret = cursor.fetchall()
-    print(ret[0][1])
     return ret
 
 
