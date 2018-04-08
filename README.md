@@ -1,26 +1,27 @@
-     ,-----.,--.                  ,--. ,---.   ,--.,------.  ,------.
-    '  .--./|  | ,---. ,--.,--. ,-|  || o   \  |  ||  .-.  \ |  .---'
-    |  |    |  || .-. ||  ||  |' .-. |`..'  |  |  ||  |  \  :|  `--, 
-    '  '--'\|  |' '-' ''  ''  '\ `-' | .'  /   |  ||  '--'  /|  `---.
-     `-----'`--' `---'  `----'  `---'  `--'    `--'`-------' `------'
-    ----------------------------------------------------------------- 
+# APOSTROPHY
 
+aposTrophy is an SAT prep website for students.
 
-Hi there! Welcome to Cloud9 IDE!
+## Getting Started
 
-To get you started, we included a small hello world application.
+Clone the repository. Navigate to the repository directory in command line. Run:
+```
+pip install -r requirements.txt
+```
+Import the latest mysql dump into a local mysql instance.
+Run app.py.
 
-1) Open the hello-world.html file
+### Prerequisites
 
-2) Click on the Preview button to open a live preview pane
+* Python 3
+* MySQL
 
-3) Make some changes to the file, save, watch the preview, and have fun!
+## Authors
 
-Happy coding!
-The Cloud9 IDE team
+* **mblaul** - [mblaul](https://github.com/mblaul)
+* **Gocnak** - [Gocnak](https://github.com/Gocnak)
+* **janelyousif** - *Initial work* - [janelyousif](https://github.com/janelyousif)
 
+## License
 
-## Support & Documentation
-
-Visit http://docs.c9.io for documentation, or http://support.c9.io for support.
-To watch some training videos, visit http://www.youtube.com/user/c9ide
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
