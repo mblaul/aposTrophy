@@ -60,7 +60,8 @@ def get_user_id(email):
     cur = mysql.connection.cursor()
     cur.execute('''SELECT user_id FROM tbl_user WHERE user_username=\'{}\''''.format(email))
 
-    ID = cur.fetchone()
+    ID = cur.fetchall()
+    print(ID)
     if len(ID) > 0:
         return ID[0]
     else:
@@ -139,21 +140,21 @@ def signUp():
 
 def getPracTestAvg(area, skill):
 
-    uid = get_user_id('testy@test.com') # session['user'])
+    uid = get_user_id('matt@blaul2.com') # session['user'])
 
     cursor = mysql.connection.cursor()
 
-    cursor.execute('''SELECT result.TEST_AREA, result.TEST_SKILL_LVL, AVG(options.is_correct)     
-          FROM options JOIN result_line 
-            ON result_line.option_id = options.option_id 
-            AND options.question_id = result_line.question_id 
-       JOIN result 
-         ON result_line.result_id = result.result_id
-       WHERE RESULT.TEST_TYPE='PRAC' AND RESULT.TEST_AREA={} AND RESULT.TEST_SKILL_LVL={} AND result.user_id={} GROUP BY result.RESULT_ID;
-        '''.format(area, skill, uid))
-#
+    cursor.execute( '''     SELECT result.TEST_AREA, result.TEST_SKILL_LVL, AVG(options.is_correct)     
+                            FROM options JOIN result_line 
+                                ON result_line.option_id = options.option_id 
+                                AND options.question_id = result_line.question_id 
+                            JOIN result 
+                                ON result_line.result_id = result.result_id
+                            WHERE RESULT.TEST_TYPE='PRAC' AND RESULT.TEST_AREA='{}' AND RESULT.TEST_SKILL_LVL={} AND result.user_id={} GROUP BY result.RESULT_ID;
+                    '''.format(area, skill, uid))
+
     ret = cursor.fetchall()
-    print(ret)
+    print(ret[0][1])
     return ret
 
 
@@ -176,7 +177,7 @@ def showDashboard():
             cursor.execute('''
                     SELECT TEST_SKILL_LVL
                     FROM result
-                    WHERE TEST_TYPE='PRAC' AND TEST_AREA={}
+                    WHERE TEST_TYPE='PRAC' AND TEST_AREA='{}'
                     ORDER BY TEST_SKILL_LVL ASC
                     '''.format(area))
 
@@ -185,7 +186,10 @@ def showDashboard():
             datalen = len(data)
             if datalen > 0:
                 # They've at least practiced something, suggest the next test to take
+                ## NOTE from mb: for other loops through cursors I used for row in range(len(data))
+                ## that may help here
                 for skill in range(1, 4):
+
                     if skill in data:  # TODO: may be problematic, may have to loop through each row manually
                         lowestArea[area] = skill + 1
                     else:
