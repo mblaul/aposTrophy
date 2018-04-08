@@ -214,9 +214,10 @@ def submitSimExam():
         return redirect(url_for('main'))
     else:
         submitTest('SIM', None, "ALL", request.form)
-        return redirect(url_for('showDashboard'))
+        return redirect(url_for('showResults'))
 
-@app.route('/results')
+
+@app.route('/results', methods=['GET'])
 def showResults():
     verify = verifyUserSession('showResults')
     if verify:
@@ -244,13 +245,11 @@ def showResults():
         return render_template('results.html', dates=dates, scores=scores, types=types, areas=areas, resids=resids)
 
 
-@app.route('/review', methods=['GET'])
+@app.route('/review', methods=['POST'])
 def showReview():
+    resultid = request.form['resultId']
 
-    # /<resultid>
-    # formt = '/result/{}.format(resultid)'
-
-    verify = verifyUserSession('/review')
+    verify = verifyUserSession('/results')
     if verify:
         return verify
     else:
@@ -261,9 +260,9 @@ def showReview():
         cur.execute(
             '''
             SELECT * FROM result_line
-            WHERE result_id = 7
+            WHERE result_id={}
             ORDER by question_id ASC
-            '''
+            '''.format(resultid)
         )
         userdata = list(cur.fetchall())
 
@@ -283,17 +282,16 @@ def showReview():
                     ORDER BY apostrophy.QUESTION.QUESTION_ID ASC;
                     '''
         )
-        data = list(cur.fetchall())
+        quesdata = list(cur.fetchall())
 
-        for testrow in range(len(data)):
+        for testrow in range(len(quesdata)):
             for userrow in range(len(userdata)):
-                if userdata[userrow][3] == data[testrow][2]:
-                    data.append(data[testrow])
+                if userdata[userrow][3] == quesdata[testrow][2]:
+                    data.append(quesdata[testrow])
 
         paragraphs = {}
         questions = {}
         options = {}
-        useroptions = {}
 
         # data[x] where x is the row itself
         # data[x][y] where y is the column
@@ -366,7 +364,7 @@ def submitPracticeExam(area, skill):
         return redirect(url_for('main'))
     else:
         submitTest('PRAC', skill, area, request.form)
-        return redirect(url_for('showDashboard'))
+        return redirect(url_for('showResults'))
 
 
 if __name__ == "__main__":

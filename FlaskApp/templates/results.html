@@ -103,8 +103,8 @@
                                             {% for (key, date) in dates.items() %}
                                             <tr>
                                                 <td>{{ date }}</td><td>{{ types[key] }}</td><td>{{ areas[key] }}</td><td>{{ scores[key] }}</td>
-                                                    <form action = "" method = "post">
-                                                        <td><button type="submit" value="{{ resids[key] }}" class="btn btn-info">View</button></td>
+                                                    <form action="/review" method = "post">
+                                                        <td><button type="submit" name="resultId" id="resultId" value="{{ resids[key] }}" class="btn btn-info">View</button></td>
                                                     </form>
                                             </tr>
                                             {% endfor %}
