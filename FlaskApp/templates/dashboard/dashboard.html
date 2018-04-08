@@ -77,40 +77,21 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
-
                         <div class="col-md-12">
                             <div class="card ">
                                 <div class="card-header ">
-                                    <h4 class="card-title">Next Available Exam</h4>
+                                    <h4 class="card-title">Exam Suggestions</h4>
                                     <p class="card-category">Based on prior results</p>
                                 </div>
                                 <div class="card-body ">
-                                    <p>Lorem ipsum dolor sit amet, elaboraret repudiandae sed ei. Sed et vocent suscipit voluptatibus, mei ne sonet blandit sensibus, postea scaevola postulant ut eos. Vix at liber essent concludaturque. Mea falli fabellas scribentur at, ad brute lucilius quo. Id dicit viris efficiendi est, cum ex veritus inimicus, no eam utinam praesent disputationi.
-
-                                        Eum in summo commune posidonium, eum choro aliquando ut. An posse blandit vix, ne sea ubique mediocritatem. Eruditi platonem pro ut, vulputate persequeris ea pro, te persecuti delicatissimi eam. Vim veri doctus sensibus at, facer impedit nominavi cum te, nobis posidonium ius in.
-                                        
-                                        In dicunt patrioque splendide per. At eum odio facilis, atqui maiorum an sed, te eam noluisse vivendum conceptam. An eos labore graecis. Justo pericula gubergren no sea, pro te rebum voluptatibus, te munere probatus gloriatur his. Error impetus his eu. Viris virtute singulis id ius, est oblique democritum ei, latine civibus vis no.
-                                        
-                                        Id duo dicam propriae, ei nisl perfecto delicatissimi usu. Sit cu utinam inimicus electram. Nostro necessitatibus sit ei. Ex fabulas complectitur duo, mel tollit maiorum repudiandae ne. Te vis fuisset deserunt.
-                                        
-                                        Ei veritus maluisset vim. Eum eius errem definitionem in. In esse verterem hendrerit mea, ea usu solet homero copiosae. Te ancillae petentium eos, ad sea debet signiferumque, mea ea iriure sanctus repudiandae. Case congue eu cum, utroque adipisci vel ad. Ipsum animal quaestio eu nec.
-                                        
-                                        Id utamur viderer alterum usu, ut autem aliquip percipitur mea. His accusata ullamcorper ex, quas integre invenire te vel. Eos ut option quaestio liberavisse, qui denique maiestatis assueverit te. No veritus consectetuer duo, cibo voluptaria ei usu, duo eu munere accusam phaedrum. In nam erant exerci nusquam.
-                                        
-                                        Duo te ridens dissentias, sea ea quem omnes iuvaret. Solum saperet id vis, vel elitr suavitate conclusionemque in. Nec ut tollit forensibus, doctus probatus no mel. Usu ei libris ornatus, cu has nibh feugiat propriae. Vim ut sale mentitum deserunt, at cibo regione ornatus sit. Vis utinam maluisset et.
-                                        
-                                        Erat dissentiunt ad qui, eu mea duis nemore epicuri. Ad sit eius appareat senserit. Mutat consequuntur comprehensam sed eu, cum viris nonumy corrumpit ei. Etiam dolore vis eu, ea alia persecuti efficiendi eos.
-                                        
-                                        Cum modo nominati eu, ut mea copiosae quaestio. Ius purto quas atomorum no, quo propriae singulis inciderint in. Duo id autem perpetua. Quod menandri euripidis mei eu, tractatos repudiandae et est. No quidam quaestio mnesarchum his, nisl nihil atomorum id nec.
-                                        
-                                        Id nullam copiosae molestiae pri, dolor numquam te cum, vis te graeci timeam impedit. Te est cibo gubergren, ut choro vivendum tacimates sit. Tota euismod et eum, ea erroribus scribentur nam. Usu ne tantas aliquam, ius sonet invidunt ad, percipit quaestio pri ei. Nec solum impetus id, affert civibus evertitur eum te, omnium omittam splendide eu eum. Blandit mandamus pri at, agam summo ea vis. Eam melius dolorum ne, an dicit luptatum has.
-                                    </p>
-                                </div>
-                                <div class="card-footer ">
-                                    <hr>
-                                    <div class="stats">
-                                        <i class="fa fa-history"></i> Updated 3 minutes ago
-                                    </div>
+                                    {% for area, skill in suggestions.items() %}
+                                        {% if area == 'Simulate' %}
+                                            <a href="/simulation">Take a simulation test</a>
+                                        {% else %}
+                                            <a href="/practice/{{ area }}/{{ skill }}">Take {{ area }} practice test diff {{ skill }}</a>
+                                        {% endif %}
+                                        <br>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>

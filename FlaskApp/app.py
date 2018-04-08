@@ -137,7 +137,7 @@ def signUp():
 
 
 def getPracTestAvg(area, skill):
-    uid = get_user_id('testy@test.com') #session['user']
+    uid = session['user']
 
     cursor = mysql.connection.cursor()
 
@@ -165,6 +165,7 @@ def getPracTestAvg(area, skill):
 def suggestTests():
     # The lowest skill not completed for each area
     lowestArea = {'Grammar': 4, 'Comprehension': 4}
+    suggestions = {}
 
     for area in lowestArea.keys():
         for skill in range(1, 4):
@@ -175,17 +176,14 @@ def suggestTests():
 
     if sum(lowestArea.values()) == 8:
         # Suggest a simulation exam
-        print("Suggesting to simulate, they're well practiced!")
+        suggestions['Simulate'] = 1
     else:
         for area in lowestArea.keys():
             if lowestArea[area] < 4:
                 # Suggest this difficulty
-                print("Suggesting difficulty {} for area {}".format(lowestArea[area], area))
-            else:
-                # Don't suggest anything?
-                print("Not suggesting anything for area {}".format(area))
+                suggestions[area] = lowestArea[area]
 
-    return lowestArea
+    return suggestions
 
 @app.route('/dashboard', methods=["GET"])
 def showDashboard():
