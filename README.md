@@ -20,7 +20,7 @@ Run app.py.
 
 * **mblaul** - [mblaul](https://github.com/mblaul)
 * **Gocnak** - [Gocnak](https://github.com/Gocnak)
-* **janelyousif** - *Initial work* - [janelyousif](https://github.com/janelyousif)
+* **janelyousif** - [janelyousif](https://github.com/janelyousif)
 
 ## License
 
