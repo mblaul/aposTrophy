@@ -8,15 +8,15 @@ from FlaskApp.core.models import User, db
 def authenticateUser(email, password):
     found = User.query.filter_by(user_username=email).first()
     if found:
-        return check_password_hash(found['user_password'], password)
+        return check_password_hash(found.user_password, password)
     else:
         return False
 
 
 def get_user_id(email):
-    ID = User.query.filter_by(user_username=email).first()
-    if len(ID) > 0:
-        return ID[0]
+    user = User.query.filter_by(user_username=email).first()
+    if user:
+        return user.user_id
     else:
         return None
 

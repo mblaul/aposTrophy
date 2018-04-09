@@ -1,6 +1,7 @@
-from flask import redirect, url_for, render_template, request
+from flask import redirect, url_for, render_template, request, session
 
 from FlaskApp.app import app
+from FlaskApp.core.models import User
 from FlaskApp.core.routes.auth import userLoggedIn, verifyUserSession
 from FlaskApp.core.routes.tests import suggestTests
 
@@ -39,26 +40,11 @@ def showDashboard():
 @app.route('/user', methods=['GET'])
 def showUser():
     verify = verifyUserSession('/user')
-
     if verify:
         return verify
     else:
-
-        user = {}
-
-        # TODO: CONVERTME
-        # cur = mysql.connection.cursor()
-        # cur.execute('''
-        #                   SELECT *
-        #                   FROM tbl_user
-        #                   WHERE user_id = 10
-        #             ''')
-        #
-        # data = cur.fetchall()
-        #
-        # for row in range(len(data)):
-        #     user[row] = [data[row][1], data[row][2], data[row][5]]
-
+        ID = session['user']
+        user = User.query.filter_by(user_id=ID).first()
         return render_template('user.html', user=user)
 
 
