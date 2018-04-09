@@ -25,30 +25,13 @@ def getPracTestAvg(area, skill):
 
 
 def getPracticeExam(area, skill=None):
-    filt = (Question.area == area) if skill else (Question.area == area, Question.skill_lvl == skill)
-    joined = Paragraph.query.join(Paragraph.questions).join(Question.options).filter(filt).order_by(Question.question_id).all()
-    # TODO: CONVERTME
-    # cur = mysql.connection.cursor()
-    # limiter = 'WHERE AREA=\'{}\''.format(area)
-    # if skill is not None:
-    #     limiter += ' AND SKILL_LVL={}'.format(skill)
-    #
-    # cur.execute('''SELECT
-    #         PARAGRAPH.PARAGRAPH_ID,
-    #         PARAGRAPH.PARAGRAPH_TEXT,
-    #         QUESTION.QUESTION_ID,
-    #         QUESTION.QUESTION_TEXT,
-    #         QUESTION.SKILL_LVL,
-    #         QUESTION.AREA,
-    #         OPTIONS.OPTION_ID,
-    #         OPTIONS.OPTION_TEXT,
-    #         OPTIONS.IS_CORRECT
-    #     FROM apostrophy.PARAGRAPH
-    #     RIGHT JOIN apostrophy.QUESTION ON QUESTION.PARAGRAPH_ID = PARAGRAPH.PARAGRAPH_ID
-    #     RIGHT JOIN apostrophy.OPTIONS ON OPTIONS.QUESTION_ID = QUESTION.QUESTION_ID
-    #     {} ORDER BY apostrophy.QUESTION.QUESTION_ID ASC;'''.format(limiter))
-    # return cur.fetchall
-    return joined
+    query = db.session.query(Paragraph, Question, Option).join(Paragraph.questions).join(Question.options)\
+        .filter(Question.area == area)
+    if skill:
+        query = query.filter(Question.skill_lvl == skill)
+
+    data = query.order_by(Question.question_id).all()
+    return data
 
 
 def suggestTests():
@@ -78,7 +61,7 @@ def suggestTests():
 
 def submitTest(type, skill, area, form):
     # Set variables for insertions into the tables
-    userid = str(session['user'])
+    userid = session['user']
 
     try:
         # Create a new result entry
@@ -102,25 +85,30 @@ def showTest(isPractice, submitAction, data):
         questions = {}
         options = {}
 
-        # data[x] where x is the row itself
-        # data[x][y] where y is the column
-
         # Loop through each row of data returned from SQL query
-        for row in range(len(data)):
-            # Add values to question dictionary { pid, ptext }
-            paragraphs[data[row][0]] = data[row][1]
+        for row in data:
 
-            # Add values to question dictionary { qid, [pid, qtext] }
-            questions[data[row][2]] = [data[row][0], data[row][3]]
+            p = row[0]  # Paragraph
+            q = row[1]  # Question for this paragraph
+            o = row[2]  # Option for this paragraph's question
 
-            # Add values to options dictionary { uniqueid, [qid, optid, opttext] }
-            options[row] = [data[row][2], data[row][6], data[row][7]]
+            # Add values to question dictionary { pid: <paragraph> }
+            paragraphs[p.paragraph_id] = p
+
+            # Add values to question dictionary { qid: <question> }
+            questions[q.question_id] = q
+
+            # Add values to options dictionary { qid, [<option1>, <option2> ... ] }
+            # The options dict will be by question ID, but append each option to a list held in each key
+            if q.question_id in options.keys():
+                options[q.question_id].append(o)
+            else:
+                options[q.question_id] = [o]
 
         return render_template('test.html', paragraphs=paragraphs, questions=questions, options=options,
                                submitAction=submitAction, isPractice=isPractice)
 
     return redirect(url_for('showDashboard'))
-
 
 
 @app.route('/simulation', methods=['GET'])
@@ -129,15 +117,10 @@ def showSimExam():
     if verify:
         return verify
     else:
-        # TODO: CONVERTME
-        # conn = mysql.connection
-        # cursor = conn.cursor()
-        # cursor.callproc('sp_generateSimExam')
-        # data = cursor.fetchall()
-        joined = Paragraph.query.join(Paragraph.questions).join(Question.options).order_by(
+        data = db.session.query(Paragraph, Question, Option).join(Paragraph.questions).join(Question.options).order_by(
             Question.question_id).all()
-        if len(joined) > 0:
-            return showTest(False, '/simulation', joined)
+        if len(data) > 0:
+            return showTest(False, '/simulation', data)
         else:
             return redirect(url_for('showDashboard'))
 
@@ -151,18 +134,15 @@ def submitSimExam():
         return redirect(url_for('showResults'))
 
 
-
 @app.route('/practice/<area>/<int:skill>', methods=['GET'])
 def showPracticeExam(area, skill=None):
-    formt = '/practice/{}/{}'.format(area, skill)
-
-    verify = verifyUserSession(formt)
+    verify = verifyUserSession('showPracticePage')
     if verify:
         return verify
     else:
         data = getPracticeExam(area, skill)
         if len(data) > 0:
-            return showTest(True, formt, data)
+            return showTest(True, '/practice/{}/{}'.format(area, skill), data)
 
         return redirect(url_for('showPracticePage'))
 
@@ -190,7 +170,7 @@ def showResults():
         areas = {}
 
         allTests = Option.query.join(Option.result_lines).join(Result)\
-            .filter_by(Result.user_id == userid).group_by(ResultLine.result_id)
+            .filter(Result.user_id == userid).group_by(ResultLine.result_id)
 
         averages = db.session.query(func.avg(allTests.subquery().columns.is_correct)).all()
 
@@ -231,7 +211,7 @@ def showResults():
 def showReview():
     resultid = request.form['resultId']
 
-    verify = verifyUserSession('/results')
+    verify = verifyUserSession('showResults')
     if verify:
         return verify
     else:

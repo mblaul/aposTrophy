@@ -39,7 +39,7 @@ def showDashboard():
 
 @app.route('/user', methods=['GET'])
 def showUser():
-    verify = verifyUserSession('/user')
+    verify = verifyUserSession('showUser')
     if verify:
         return verify
     else:
