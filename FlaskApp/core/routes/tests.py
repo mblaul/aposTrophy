@@ -95,8 +95,12 @@ def showTest(isPractice, submitAction, data):
             # Add values to question dictionary { pid: <paragraph> }
             paragraphs[p.paragraph_id] = p
 
-            # Add values to question dictionary { qid: <question> }
-            questions[q.question_id] = q
+            # Add values to question dictionary { pid: <questions> }
+            # Each question is added to a list under the paragraph's ID
+            if p.paragraph_id in questions.keys():
+                questions[p.paragraph_id].append(q)
+            else:
+                questions[p.paragraph_id] = [q]
 
             # Add values to options dictionary { qid, [<option1>, <option2> ... ] }
             # The options dict will be by question ID, but append each option to a list held in each key
@@ -169,11 +173,11 @@ def showResults():
         types = {}
         areas = {}
 
-        allTests = Option.query.join(Option.result_lines).join(Result)\
-            .filter(Result.user_id == userid).group_by(ResultLine.result_id)
-
-        averages = db.session.query(func.avg(allTests.subquery().columns.is_correct)).all()
-
+        data = db.session.query(Result.result_date, Result.result_id, Result.test_type, Result.test_area,
+                                func.avg(Option.is_correct))\
+            .join(Option.result_lines)\
+            .join(Result.result_lines)\
+            .filter(Result.user_id == userid).group_by(ResultLine.result_id).all()
 #         '''	SELECT
 # 	   result.result_date,
 #        result_line.result_id,
