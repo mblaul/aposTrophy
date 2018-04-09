@@ -85,7 +85,7 @@ def login():
             if redir_method:
                 return redirect(url_for(redir_method))
             else:
-                return redirect(url_for('showDashboard'))  # just go to the dashboard by default
+                return redirect(url_for('showUser'))  # just go to the dashboard by default
         else:
             return json.dumps({'error':'Not authenticated'}) #str(data[0])})
     else:
@@ -185,18 +185,6 @@ def suggestTests():
 
     return suggestions
 
-@app.route('/dashboard', methods=["GET"])
-def showDashboard():
-    verify = verifyUserSession('showDashboard')
-    if verify:
-        return verify
-    else:
-        # Let's suggest some tests to take
-        suggs = suggestTests()
-
-        return render_template('dashboard/dashboard.html', suggestions=suggs)
-
-
 def showTest(isPractice, submitAction, data):
 
     if len(data) > 0:
@@ -222,7 +210,7 @@ def showTest(isPractice, submitAction, data):
         return render_template('test.html', paragraphs=paragraphs, questions=questions, options=options,
                                submitAction=submitAction, isPractice=isPractice)
 
-    return redirect(url_for('showDashboard'))
+    return redirect(url_for('showUser'))
 
 
 def submitTest(type, skill, area, form):
@@ -261,7 +249,7 @@ def showSimExam():
         if len(data) > 0:
             return showTest(False, '/simulation', data)
         else:
-            return redirect(url_for('showDashboard'))
+            return redirect(url_for('showUser'))
 
 
 @app.route('/simulation', methods=['POST'])
@@ -429,7 +417,6 @@ def showUser():
     if verify:
         return verify
     else:
-
         user = {}
         userid = session['user']
 
@@ -441,7 +428,6 @@ def showUser():
                     '''.format(userid))
 
         data = cur.fetchall()
-
 
         for row in range(len(data)):
             user[row] = [data[row][1], data[row][2], data[row][5]]
