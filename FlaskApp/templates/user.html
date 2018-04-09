@@ -6,7 +6,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="/static/img/apple-icon.png">
     <link rel="icon" type="image/png" href="/static/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Light Bootstrap Dashboard - Free Bootstrap 4 Admin Dashboard by Creative Tim</title>
+    <title>User Profile</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -117,10 +117,20 @@
                                     <h5>Based on your prior results.</h5></center>
                                     <hr>
                                     <p class="description text-center">
-                                    
-                                        Grammar: Medium <i class="fa fa-arrow-circle-right" style="color:green"></i>
+
+                                        {% for area, skill in suggestions.items() %}
+                                        {% if area == 'Simulate' %}
+                                            <a href="/simulation">Take a simulation test</a>
+                                        {% else %}
+                                            <a href="/practice/{{ area }}/{{ skill }}">Take {{ area }} practice test difficulty {{ skill }}</a>
+                                        {% endif %}
                                         <br>
-                                        Comprehension: Hard <i class="fa fa-arrow-circle-right" style="color:green"></i>
+                                    {% endfor %}
+
+
+                                        <!--Grammar: Medium <i class="fa fa-arrow-circle-right" style="color:green"></i>-->
+                                        <!--<br>-->
+                                        <!--Comprehension: Hard <i class="fa fa-arrow-circle-right" style="color:green"></i>-->
                                     </p>
                                 </div>
                             </div>

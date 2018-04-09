@@ -363,7 +363,6 @@ def showReview():
             # Add values to options dictionary { uniqueid, [qid, optid, opttext, is_correct] }
             options[row] = [data[row][2], data[row][6], data[row][7], data[row][8]]
 
-
         return render_template('review.html', paragraphs=paragraphs, questions=questions, options=options, userdata=userdata, submitAction=None, isPractice=None)
 
 
@@ -432,20 +431,24 @@ def showUser():
     else:
 
         user = {}
+        userid = session['user']
 
         cur = mysql.connection.cursor()
         cur.execute('''
                           SELECT *
                           FROM tbl_user
-                          WHERE user_id = 10
-                    ''')
+                          WHERE user_id = {}
+                    '''.format(userid))
 
         data = cur.fetchall()
+
 
         for row in range(len(data)):
             user[row] = [data[row][1], data[row][2], data[row][5]]
 
-        return render_template('user.html',user=user)
+        suggs = suggestTests()
+
+        return render_template('user.html', user=user, suggestions=suggs)
 
 
 if __name__ == "__main__":
