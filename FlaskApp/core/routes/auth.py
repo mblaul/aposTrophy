@@ -66,7 +66,6 @@ def logout():
     return redirect(url_for('main'))
 
 
-
 @app.route('/signup', methods=['POST'])
 def signUp():
     # Read vlaues from UI

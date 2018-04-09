@@ -1,38 +1,32 @@
-from flask import session, redirect, url_for, request, render_template
+from flask import session, redirect, url_for, request, render_template, json
+from sqlalchemy import func
 
 from FlaskApp.core import app
+from FlaskApp.core.models import db, Option, ResultLine, Result, Paragraph, Question
 from FlaskApp.core.routes.main import verifyUserSession, userLoggedIn
 
 
 def getPracTestAvg(area, skill):
     uid = session['user']
 
-    # TODO: CONVERTME
-    # cursor = mysql.connection.cursor()
-    #
-    # cursor.execute( '''     SELECT AVG(options.is_correct)
-    #                         FROM options JOIN result_line
-    #                             ON result_line.option_id = options.option_id
-    #                             AND options.question_id = result_line.question_id
-    #                         JOIN result
-    #                             ON result_line.result_id = result.result_id
-    #                         WHERE RESULT.TEST_TYPE='PRAC'
-    #                         AND RESULT.TEST_AREA='{}'
-    #                         AND RESULT.TEST_SKILL_LVL={}
-    #                         AND result.user_id={}
-    #                         GROUP BY result.USER_ID
-    #                         LIMIT 5;
-    #                 '''.format(area, skill, uid))
-    #
-    # ret = cursor.fetchone()
-    # if ret:
-    #     return ret[0]
-    # else:
-    #     return None
-    return None
+    last5 = Option.query.join(Option.result_lines)\
+        .filter(Option.option_id == ResultLine.option_id, Option.question_id == ResultLine.question_id)\
+        .join(Result).filter(ResultLine.result_id == Result.result_id)\
+        .filter(Result.test_type == 'PRAC',
+                Result.test_area == area,
+                Result.test_skill_lvl == skill,
+                Result.user_id == uid)\
+        .limit(5)
+
+    avg = db.session.query(func.avg(last5.subquery().columns.is_correct)).scalar()
+
+    print("Avg ", avg)
+    return avg
 
 
 def getPracticeExam(area, skill=None):
+    filt = (Question.area == area) if skill else (Question.area == area, Question.skill_lvl == skill)
+    joined = Paragraph.query.join(Paragraph.questions).join(Question.options).filter(filt).order_by(Question.question_id).all()
     # TODO: CONVERTME
     # cur = mysql.connection.cursor()
     # limiter = 'WHERE AREA=\'{}\''.format(area)
@@ -54,7 +48,7 @@ def getPracticeExam(area, skill=None):
     #     RIGHT JOIN apostrophy.OPTIONS ON OPTIONS.QUESTION_ID = QUESTION.QUESTION_ID
     #     {} ORDER BY apostrophy.QUESTION.QUESTION_ID ASC;'''.format(limiter))
     # return cur.fetchall
-    return None
+    return joined
 
 
 def suggestTests():
@@ -86,26 +80,18 @@ def submitTest(type, skill, area, form):
     # Set variables for insertions into the tables
     userid = str(session['user'])
 
-    # Create a new result entry
-    # TODO: CONVERTME!
-    # conn = mysql.connection
-    # cursor = conn.cursor()
-    # cursor.callproc('sp_newResult', (userid, type, skill, area))
-    # # data = cursor.fetchall()
-    # mysql.connection.commit()
-    #
-    # # Create result lines for each selection
-    # for selection in form:
-    #     conn = mysql.connection
-    #     cursor = conn.cursor()
-    #     cursor.callproc('sp_newResultLine', (form.get(selection), str(selection)))
-    #     # data = cursor.fetchall()
-    #     mysql.connection.commit()
-    #
-    # return json.dumps({'Code':'Success!'})
-    return None
-
-
+    try:
+        # Create a new result entry
+        res = Result(user_id=userid, test_type=type, test_skill_lvl=skill, test_area=area)
+        db.session.add(res)
+        # Create a new result line for every option
+        for selection in form:
+            res_line = ResultLine(result_id=res.result_id, option_id=form.get(selection), question_id=str(selection))
+            db.session.add(res_line)
+        db.session.commit()
+        return True
+    except:
+        return json.dumps({'error': 'Cannot submit the test!'})
 
 
 def showTest(isPractice, submitAction, data):
@@ -148,9 +134,10 @@ def showSimExam():
         # cursor = conn.cursor()
         # cursor.callproc('sp_generateSimExam')
         # data = cursor.fetchall()
-        data = []
-        if len(data) > 0:
-            return showTest(False, '/simulation', data)
+        joined = Paragraph.query.join(Paragraph.questions).join(Question.options).order_by(
+            Question.question_id).all()
+        if len(joined) > 0:
+            return showTest(False, '/simulation', joined)
         else:
             return redirect(url_for('showDashboard'))
 
@@ -202,6 +189,28 @@ def showResults():
         types = {}
         areas = {}
 
+        allTests = Option.query.join(Option.result_lines).join(Result)\
+            .filter_by(Result.user_id == userid).group_by(ResultLine.result_id)
+
+        averages = db.session.query(func.avg(allTests.subquery().columns.is_correct)).all()
+
+#         '''	SELECT
+# 	   result.result_date,
+#        result_line.result_id,
+#        result.test_type,
+#        result.test_area,
+#        AVG(options.is_correct)
+#
+# FROM   options
+#        JOIN result_line
+#          ON result_line.option_id = options.option_id
+#             AND options.question_id = result_line.question_id
+#        JOIN result
+#          ON result_line.result_id = result.result_id
+#
+#        WHERE user_id = uid
+# GROUP  BY result_line.result_id;'''
+
         # TODO: CONVERTME
         # conn = mysql.connection
         # cursor = conn.cursor()
@@ -230,6 +239,15 @@ def showReview():
         data = []
         userdata = []
 
+
+        userdata = ResultLine.query.filter(ResultLine.result_id == resultid).order_by(ResultLine.question_id).all()
+        quesdata = Paragraph.query.join(Paragraph.questions).join(Question.options).order_by(Question.question_id).all()
+
+
+        for row in userdata:
+            for quesrow in quesdata:
+                if row.question_id == quesrow.question_id:
+                    data.append(quesrow)
         # TODO: CONVERTME
         # cur = mysql.connection.cursor()
         # cur.execute(

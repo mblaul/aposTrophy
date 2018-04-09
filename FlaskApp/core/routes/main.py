@@ -34,7 +34,7 @@ def showDashboard():
         # Let's suggest some tests to take
         suggs = suggestTests()
 
-        return render_template('dashboard/dashboard.html', suggestions=suggs)
+        return render_template('dashboard.html', suggestions=suggs)
 
 
 @app.route('/user', methods=['GET'])
