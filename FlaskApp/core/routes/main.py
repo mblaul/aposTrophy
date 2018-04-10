@@ -1,4 +1,4 @@
-from flask import redirect, url_for, render_template, request, session
+from flask import redirect, url_for, render_template, request, session, flash
 
 from FlaskApp.app import app
 from FlaskApp.core.models import User
@@ -10,12 +10,6 @@ from FlaskApp.core.routes.tests import suggestTests
 def main():
     loggedIn = userLoggedIn()
     return render_template('index.html', loggedIn=loggedIn)
-
-
-@app.route('/login', methods=['GET'])
-def showLogIn():
-    redir_method = request.args.get('redir', default=None)
-    return render_template('login.html', redir=redir_method)
 
 
 @app.route('/signup', methods=['GET'])

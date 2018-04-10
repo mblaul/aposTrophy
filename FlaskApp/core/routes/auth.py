@@ -1,4 +1,4 @@
-from flask import request, render_template, redirect, url_for, session, json
+from flask import request, render_template, redirect, url_for, session, json, flash
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from FlaskApp.app import app
@@ -10,7 +10,7 @@ def authenticateUser(email, password):
     if found:
         return check_password_hash(found.user_password, password)
     else:
-        return False
+        return None
 
 
 def get_user_id(email):
@@ -33,6 +33,12 @@ def userLoggedIn():
     return 'user' in session
 
 
+@app.route('/login', methods=['GET'])
+def showLogIn():
+    redir_method = request.args.get('redir', default=None)
+    return render_template('login.html', redir=redir_method)
+
+
 @app.route('/login', methods=['POST'])
 def login():
     redir_method = request.args.get('redir', default=None)
@@ -44,19 +50,28 @@ def login():
     if _email and _password:
 
         # If data is returned something went wrong, if data was not returned then the user was authenticated
-        if authenticateUser(_email, _password):
+        resp = authenticateUser(_email, _password)
+        if resp is not None:
 
-            # Set session variable to userid
-            session['user'] = get_user_id(_email)
+            if resp:
+                # Set session variable to userid
+                session['user'] = get_user_id(_email)
 
-            if redir_method:
-                return redirect(url_for(redir_method))
+                if redir_method:
+                    return redirect(url_for(redir_method))
+                else:
+                    return redirect(url_for('showUser'))  # just go to the dashboard by default
             else:
-                return redirect(url_for('showUser'))  # just go to the dashboard by default
+                # Incorrect password
+                flash('Failed to login: password incorrect.')
+                return render_template('login.html', redir=redir_method)
         else:
-            return json.dumps({'error': 'Not authenticated'})  # str(data[0])})
+            # None means the account isn't found
+            flash('Failed to authenticate: User email not found!')
+            return render_template('login.html', redir=redir_method)
     else:
-        return json.dumps({'html': '<span>Please enter the required fields.</span>'})
+        flash('Please enter a username and password.')
+        return render_template('login.html', redir=redir_method)
 
 
 @app.route('/logout')
