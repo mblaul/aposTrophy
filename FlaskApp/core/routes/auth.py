@@ -52,7 +52,7 @@ def login():
             if redir_method:
                 return redirect(url_for(redir_method))
             else:
-                return redirect(url_for('showDashboard'))  # just go to the dashboard by default
+                return redirect(url_for('showUser'))  # just go to the dashboard by default
         else:
             return json.dumps({'error': 'Not authenticated'})  # str(data[0])})
     else:

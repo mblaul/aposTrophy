@@ -113,7 +113,7 @@ def showTest(isPractice, submitAction, data):
         return render_template('test.html', paragraphs=paragraphs, questions=questions, options=options,
                                submitAction=submitAction, isPractice=isPractice)
 
-    return redirect(url_for('showDashboard'))
+    return redirect(url_for('showUser'))
 
 
 @app.route('/simulation', methods=['GET'])
@@ -127,7 +127,7 @@ def showSimExam():
         if len(data) > 0:
             return showTest(False, '/simulation', data)
         else:
-            return redirect(url_for('showDashboard'))
+            return redirect(url_for('showUser'))
 
 
 @app.route('/simulation', methods=['POST'])

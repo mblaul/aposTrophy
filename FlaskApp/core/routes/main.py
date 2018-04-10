@@ -25,18 +25,6 @@ def showSignUp():
     return render_template('signup.html')
 
 
-@app.route('/dashboard', methods=["GET"])
-def showDashboard():
-    verify = verifyUserSession('showDashboard')
-    if verify:
-        return verify
-    else:
-        # Let's suggest some tests to take
-        suggs = suggestTests()
-
-        return render_template('dashboard.html', suggestions=suggs)
-
-
 @app.route('/user', methods=['GET'])
 def showUser():
     verify = verifyUserSession('showUser')
@@ -45,7 +33,8 @@ def showUser():
     else:
         ID = session['user']
         user = User.query.filter_by(user_id=ID).first()
-        return render_template('user.html', user=user)
+        suggs = suggestTests()
+        return render_template('user.html', user=user, suggs=suggs)
 
 
 @app.route('/practice', methods=['GET'])
