@@ -17,10 +17,10 @@
         <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 
         <style>
- form {
-    width: 300px;
-    margin: 0 auto;
-}
+         form {
+            width: 300px;
+            margin: 0 auto;
+        }
         </style>
         
 	</head>
@@ -28,31 +28,30 @@
 	<body id="top">
 
 		<!-- Header -->
-			<div id="header">
-				<div class="container">
-						
-					<!-- Logo -->
-						<div id="logo">
-							<h1><img src="../static/img/trophy.png" width="50px"><a href="/">aposTrophy</a></h1>
-						</div>
-					
-					<!-- Nav -->
-						<nav id="nav">
-							<ul>
-									<li><a href="/">Home</a></li>
-								<li class="active"><a href="login">Login</a></li>
-								<li><a href="signup">Signup</a></li>
-							</ul>
-						</nav> 
+        <div id="header">
+            <div class="container">
+                <!-- Logo -->
+                <div id="logo">
+                    <h1><img src="../static/img/trophy.png" width="50px"><a href="/">aposTrophy</a></h1>
                 </div>
+
+                <!-- Nav -->
+                <nav id="nav">
+                    <ul>
+                            <li><a href="/">Home</a></li>
+                        <li class="active"><a href="/login">Login</a></li>
+                        <li><a href="/signup">Signup</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
 
 		<!-- Main -->
 			<div id="main">
                 {% block content %}
                     <div class="container">
-                    {% for message in get_flashed_messages() %}
-                        <div class="alert alert-danger">
+                    {% for category, message in get_flashed_messages(with_categories=True) %}
+                        <div class="alert alert-{{ category }}">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         {{ message }}
                         </div>
@@ -84,21 +83,17 @@
 									<div class="12u">
 										<input type="password" name="inputPassword" id="inputPassword" placeholder="Password" />
 									</div>
-									</div>
+                              </div>
 										<div class="row 50%">
-                                             
                                             <div class="12u">
 												<input id="btnLogIn" class="button big alt" type="submit" value="Log In">
 											</div>
-											
-                              </div>
+                                        </div>
 									</form>
 								</section>
 							</div>
-					
-
 					</div>
-        </div>
+            </div>
         </div>
 			
 		<!-- Copyright -->
@@ -108,7 +103,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="6u">
-							<span>Copyright &copy; Untitled. All rights reserved.</span>
+							<span>Copyright &copy; aposTrophy. All rights reserved.</span>
 						</div>
 						<div class="6u">
 							<ul class="social">
@@ -120,6 +115,5 @@
 					</div>
 				</div>
 			</div>
-
 	</body>
 </html>

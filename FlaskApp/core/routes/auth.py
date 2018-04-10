@@ -63,14 +63,14 @@ def login():
                     return redirect(url_for('showUser'))  # just go to the dashboard by default
             else:
                 # Incorrect password
-                flash('Failed to login: password incorrect.')
+                flash('Failed to login: password incorrect.', 'danger')
                 return render_template('login.html', redir=redir_method)
         else:
             # None means the account isn't found
-            flash('Failed to authenticate: User email not found!')
+            flash('Failed to authenticate: User email not found!', 'danger')
             return render_template('login.html', redir=redir_method)
     else:
-        flash('Please enter a username and password.')
+        flash('Please enter a username and password.', 'danger')
         return render_template('login.html', redir=redir_method)
 
 
@@ -83,7 +83,7 @@ def logout():
 
 @app.route('/signup', methods=['POST'])
 def signUp():
-    # Read vlaues from UI
+    # Read values from UI
     _fname = request.form['inputFName']
     _lname = request.form['inputLName']
     _school = request.form['inputSchool']
@@ -98,15 +98,19 @@ def signUp():
         # Do preliminary check to see if this email is taken
         ID = get_user_id(_email)
         if ID:
-            return json.dumps({'error': 'Account already exists under this email.'})
+            flash('A user account already exists for this email!', 'danger')
+            return render_template('signup.html')
 
         try:
             newuser = User(user_fname=_fname, user_lname=_lname, user_username=_email, user_password=_hashed_pass,
                            user_school=_school)
             db.session.add(newuser)
             db.session.commit()
+            flash('User account created, you may now log in!', 'success')
             return render_template('login.html')
         except:
-            return json.dumps({'error': 'Failed to create the new user!'})
+            flash('Failed to create the new user due to an internal exception!', 'danger')
+            return render_template('signup.html')
     else:
-        return json.dumps({'html': '<span>Please enter the required fields.</span>'})
+        flash('Please enter all of the required fields.', 'danger')
+        return render_template('signup.html')

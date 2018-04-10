@@ -8,15 +8,14 @@
         <link rel="icon" type="image/png" href="/static/img/favicon.ico">
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
 		<script src="/static/js/jquery/dist/jquery.min.js"></script>
-		{#<script src="/js/jquery.dropotron.min.js"></script>
-		<script src="/js/jquery.slidertron.min.js"></script>
-		<script src="/js/skel.min.js"></script>
-		<script src="/js/skel-layers.min.js"></script>
-		<script src="/js/init.js"></script>#}
 			<link rel="stylesheet" href="../static/skel.css" />
 			<link rel="stylesheet" href="../static/style.css" />
 			<link rel="stylesheet" href="../static/style-desktop.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+
+        <script src="/static/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
         <style>
  form {
     width: 300px;
@@ -39,8 +38,8 @@
 						<nav id="nav">
 							<ul>
 							<li><a href="/">Home</a></li>
-								<li><a href="login">Login</a></li>
-								<li class="active"><a href="signup">Signup</a></li>
+								<li><a href="/login">Login</a></li>
+								<li class="active"><a href="/signup">Signup</a></li>
 							</ul>
 						</nav> 
                 </div>
@@ -48,6 +47,18 @@
         
 		<!-- Main -->
 			<div id="main">
+
+                {% block content %}
+                    <div class="container">
+                    {% for category, message  in get_flashed_messages(with_categories=True) %}
+                        <div class="alert alert-{{ category }}">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ message }}
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% endblock %}
+
 				<div class="container">
 <center><span style="font-size: 40px !important; color: #D83A4A;">Sign Up</span></center>
                     <br>
@@ -77,20 +88,20 @@
                               </div>
                               <div class="row 50%">
 									<div class="12u">
-										<input type="password" name="inputPassword" id="inputPassword" placeholder="Password" />
+										<input type="password" name="inputPassword" id="inputPassword" placeholder="Password" required/>
 									</div>
 									</div>
 										<div class="row 50%">
                                              
                                             <div class="12u">
-												<input id="btnSignUp" class="button big alt" type="submit" value="Sign Up">
+												<input id="btnSignUp" class="button big alt" type="submit" value="Sign Up" style="width: 100%;">
 											</div>
 											
                               </div>
 									</form>
 								</section>
 
-        </div>
+            </div>
         </div>
 			
 		<!-- Copyright -->
@@ -100,7 +111,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="6u">
-							<span>Copyright &copy; Untitled. All rights reserved.</span>
+							<span>Copyright &copy; aposTrophy. All rights reserved.</span>
 						</div>
 						<div class="6u">
 							<ul class="social">
@@ -112,6 +123,5 @@
 					</div>
 				</div>
 			</div>
-
 	</body>
 </html>
