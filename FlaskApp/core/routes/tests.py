@@ -172,7 +172,7 @@ def showResults():
 
         data = db.session.query(Result.result_date, Result.result_id, Result.test_type, Result.test_area,
                                 func.avg(Option.is_correct))\
-            .join(Option.result_lines)\
+            .join(Option.result_lines).filter(ResultLine.option_id == Option.option_id, ResultLine.question_id == Option.question_id)\
             .join(Result, Result.result_id == ResultLine.result_id)\
             .filter(Result.user_id == userid).group_by(ResultLine.result_id).all()
 
