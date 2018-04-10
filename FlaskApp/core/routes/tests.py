@@ -169,48 +169,14 @@ def showResults():
         return verify
     else:
         userid = session['user']
-        dates = {}
-        resids = {}
-        scores = {}
-        types = {}
-        areas = {}
 
         data = db.session.query(Result.result_date, Result.result_id, Result.test_type, Result.test_area,
                                 func.avg(Option.is_correct))\
             .join(Option.result_lines)\
             .join(Result, Result.result_id == ResultLine.result_id)\
             .filter(Result.user_id == userid).group_by(ResultLine.result_id).all()
-#         '''	SELECT
-# 	   result.result_date,
-#        result_line.result_id,
-#        result.test_type,
-#        result.test_area,
-#        AVG(options.is_correct)
-#
-# FROM   options
-#        JOIN result_line
-#          ON result_line.option_id = options.option_id
-#             AND options.question_id = result_line.question_id
-#        JOIN result
-#          ON result_line.result_id = result.result_id
-#
-#        WHERE user_id = uid
-# GROUP  BY result_line.result_id;'''
 
-        # TODO: CONVERTME
-        # conn = mysql.connection
-        # cursor = conn.cursor()
-        # cursor.callproc('sp_getResults', (userid,))
-        # data = cursor.fetchall()
-        #
-        # for row in range(len(data)):
-        #     dates[row] = data[row][0]
-        #     resids[row] = data[row][1]
-        #     types[row] = data[row][2]
-        #     areas[row] = data[row][3]
-        #     scores[row] = "{:.2%}".format(data[row][4])
-
-        return render_template('results.html', dates=dates, scores=scores, types=types, areas=areas, resids=resids)
+        return render_template('results.html', results=data)
 
 
 @app.route('/review', methods=['POST'])
