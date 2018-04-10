@@ -67,11 +67,13 @@ def submitTest(type, skill, area, form):
         # Create a new result entry
         res = Result(user_id=userid, test_type=type, test_skill_lvl=skill, test_area=area)
         db.session.add(res)
+        db.session.commit()
         # Create a new result line for every option
         for selection in form:
             res_line = ResultLine(result_id=res.result_id, option_id=form.get(selection), question_id=str(selection))
             db.session.add(res_line)
-        db.session.commit()
+            db.session.commit()
+
         return True
     except:
         return json.dumps({'error': 'Cannot submit the test!'})
@@ -176,7 +178,7 @@ def showResults():
         data = db.session.query(Result.result_date, Result.result_id, Result.test_type, Result.test_area,
                                 func.avg(Option.is_correct))\
             .join(Option.result_lines)\
-            .join(Result.result_lines)\
+            .join(Result, Result.result_id == ResultLine.result_id)\
             .filter(Result.user_id == userid).group_by(ResultLine.result_id).all()
 #         '''	SELECT
 # 	   result.result_date,
