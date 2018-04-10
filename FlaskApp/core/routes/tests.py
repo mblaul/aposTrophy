@@ -135,7 +135,7 @@ def submitSimExam():
     if not userLoggedIn():
         return redirect(url_for('main'))
     else:
-        submitTest('SIM', None, "ALL", request.form)
+        submitTest('SIM', None, "All", request.form)
         return redirect(url_for('showResults'))
 
 
@@ -174,8 +174,7 @@ def showResults():
             .join(Option.result_lines).filter(ResultLine.option_id == Option.option_id, ResultLine.question_id == Option.question_id)\
             .join(Result, Result.result_id == ResultLine.result_id)\
             .filter(Result.user_id == userid).group_by(ResultLine.result_id).all()
-        diffs = ['Easy', 'Medium', 'Hard']
-        return render_template('results.html', results=data, diffs=diffs)
+        return render_template('results.html', results=data)
 
 
 @app.route('/review', methods=['POST'])

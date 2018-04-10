@@ -103,7 +103,8 @@
                                           <tbody>
                                             {% for date, resultID, type, area, diff, score in results %}
                                             <tr>
-                                                <td>{{ date }}</td><td>{{ type }}</td><td>{{ area }}</td><td>{{ diffs[diff-1] if diff else None }}</td><td>{{ '%.2f'| format((score|float)*100.0) }}%</td>
+                                            {% set diffs, types = ['Easy', 'Medium', 'Hard'], {'PRAC':'Practice', 'SIM':'Simulation'} %}
+                                                <td>{{ date }}</td><td>{{ types[type] }}</td><td>{{ area }}</td><td>{{ diffs[diff-1] if diff else 'All' }}</td><td>{{ '%.2f'| format((score|float)*100.0) }}%</td>
                                                     <form action="/review" method = "post">
                                                         <td><button type="submit" name="resultId" id="resultId" value="{{ resultID }}" class="btn btn-info">View</button></td>
                                                     </form>
