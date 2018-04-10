@@ -9,19 +9,18 @@ from FlaskApp.core.routes.main import verifyUserSession, userLoggedIn
 def getPracTestAvg(area, skill):
     uid = session['user']
 
-    last5 = Option.query.join(Option.result_lines)\
-        .filter(Option.option_id == ResultLine.option_id, Option.question_id == ResultLine.question_id)\
-        .join(Result).filter(ResultLine.result_id == Result.result_id)\
-        .filter(Result.test_type == 'PRAC',
+    avgq = db.session.query(func.avg(Option.is_correct)) \
+        .join(Option.result_lines).filter(ResultLine.option_id == Option.option_id,
+                                          ResultLine.question_id == Option.question_id) \
+        .join(Result, Result.result_id == ResultLine.result_id) \
+        .filter(Result.user_id == uid,
+                Result.test_type == 'PRAC',
                 Result.test_area == area,
-                Result.test_skill_lvl == skill,
-                Result.user_id == uid)\
-        .limit(5)
-
-    avg = db.session.query(func.avg(last5.subquery().columns.is_correct)).scalar()
-
-    print("Avg ", avg)
-    return avg
+                Result.test_skill_lvl == skill).group_by(ResultLine.result_id).limit(5).all()
+    if len(avgq):
+        return sum(x[0] for x in avgq)/len(avgq)
+    else:
+        return 0
 
 
 def getPracticeExam(area, skill=None):
