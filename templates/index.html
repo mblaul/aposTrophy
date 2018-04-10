@@ -14,28 +14,33 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
         
         <style>
-            .responsive {
-                width: 100%;
-                height: auto;
-            }
+        /* Container needed to position the button */
+        .bannerImage {
+          position: relative;
+          width: 100%;
+        }
 
-            .bannerImage .btn {
-                position: absolute;
-                top: 80%;
-                left: 50%;
-                width: 15%;
-                height: 15%;
-                transform: translate(-50%, -50%);
-                -ms-transform: translate(-50%, -50%);
-                background-color: #D83A4A;
-                color: white;
-                font-size: 30px;
-                padding: 12px 24px;
-                text-overflow: ellipsis;
-                border: none;
-                cursor: pointer;
-                border-radius: 5px;
-            }
+        /* Make the image responsive */
+        .bannerImage img {
+          width: 100%;
+          height: auto;
+        }
+
+        /* Style the button and place it in the middle of the container/image */
+        .bannerImage .btn {
+          position: absolute;
+          top: 70%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          background-color: #D83A4A;
+          color: white;
+          font-size: 30px;
+          padding: 12px 24px;
+          border: none;
+          cursor: pointer;
+          border-radius: 5px;
+        }
         </style>
 	</head>
 	<body class="homepage" id="top">
@@ -65,7 +70,7 @@
         </div>
 
         <div class="bannerImage">
-            <img src="/static/img/test.png" class="responsive">
+            <img src="/static/img/test.png">
             <a href={{ '/user' if loggedIn else '/signup' }}>
             <button class="btn">
                 {% if loggedIn %}
