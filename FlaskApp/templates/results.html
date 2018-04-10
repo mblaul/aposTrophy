@@ -95,14 +95,15 @@
                                                 <th scope="col">Date</th>
                                                 <th scope="col">Type</th>
                                                 <th scope="col">Area</th>
+                                                <th scope="col">Difficulty</th>
                                                 <th scope="col">Score</th>
                                                 <th></th>
                                             </tr>
                                           </thead>
                                           <tbody>
-                                            {% for date, resultID, type, area, score in results %}
+                                            {% for date, resultID, type, area, diff, score in results %}
                                             <tr>
-                                                <td>{{ date }}</td><td>{{ type }}</td><td>{{ area }}</td><td>{{ score }}</td>
+                                                <td>{{ date }}</td><td>{{ type }}</td><td>{{ area }}</td><td>{{ diffs[diff-1] if diff else None }}</td><td>{{ '%.2f'| format((score|float)*100.0) }}%</td>
                                                     <form action="/review" method = "post">
                                                         <td><button type="submit" name="resultId" id="resultId" value="{{ resultID }}" class="btn btn-info">View</button></td>
                                                     </form>

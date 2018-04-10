@@ -169,13 +169,13 @@ def showResults():
     else:
         userid = session['user']
 
-        data = db.session.query(Result.result_date, Result.result_id, Result.test_type, Result.test_area,
+        data = db.session.query(Result.result_date, Result.result_id, Result.test_type, Result.test_area, Result.test_skill_lvl,
                                 func.avg(Option.is_correct))\
             .join(Option.result_lines).filter(ResultLine.option_id == Option.option_id, ResultLine.question_id == Option.question_id)\
             .join(Result, Result.result_id == ResultLine.result_id)\
             .filter(Result.user_id == userid).group_by(ResultLine.result_id).all()
-
-        return render_template('results.html', results=data)
+        diffs = ['Easy', 'Medium', 'Hard']
+        return render_template('results.html', results=data, diffs=diffs)
 
 
 @app.route('/review', methods=['POST'])
