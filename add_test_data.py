@@ -1,4 +1,4 @@
-from FlaskApp.core.models import db
+from core.models import db
 
 # Taken from the SQL dumps
 
