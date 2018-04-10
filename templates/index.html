@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+        <link rel="icon" type="image/png" href="../static/img/favicon.ico">
+		<title>aposTrophy - Home</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+			<link rel="stylesheet" href="../static/skel.css" />
+			<link rel="stylesheet" href="../static/style.css" />
+			<link rel="stylesheet" href="../static/style-desktop.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+        
+        <style>
+            .responsive {
+                width: 100%;
+                height: auto;
+            }
+
+            .bannerImage .btn {
+                position: absolute;
+                top: 80%;
+                left: 50%;
+                width: 15%;
+                height: 15%;
+                transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                background-color: #D83A4A;
+                color: white;
+                font-size: 30px;
+                padding: 12px 24px;
+                text-overflow: ellipsis;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+        </style>
+	</head>
+	<body class="homepage" id="top">
+
+		<!-- Header -->
+			<div id="header">
+				<div class="container">
+						
+					<!-- Logo -->
+						<div id="logo">
+							<h1><img src="/static/img/trophy.png" width="50px"><a href="/">aposTrophy</a></h1>
+						</div>
+					
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li class="active"><a href="/">Home</a></li>
+                                {% if not loggedIn %}
+								<li><a href="/login">Login</a></li>
+								<li><a href="/signup">Signup</a></li>
+                                {% else %}
+                                <li><a href="/user">Go to Dashboard</a> </li>
+                                {% endif %}
+							</ul>
+						</nav> 
+                </div>
+        </div>
+
+        <div class="bannerImage">
+            <img src="../static/img/test.png" class="responsive">
+            <a href={{ '/user' if loggedIn else '/signup' }}>
+            <button class="btn">
+                {% if loggedIn %}
+                    Go to dashboard
+                {% else %}
+                    Sign up today!
+                {% endif %}
+                </button></a>
+        </div>
+
+		<!-- Featured -->
+			<div id="featured">
+				<div class="container">
+					<div class="row 200%">
+						<section class="3u">
+							<span class="pennant icon fa-money"></span>
+							<h3>Absolutely free</h3>
+							<p>No need to spend any extra money practicing for your big test.</p>
+						</section>
+						<section class="3u">
+							<span class="pennant icon fa-cloud"></span>
+							<h3>Unlimited</h3>
+							<p>Take as many practice tests as you want. Includes different areas such as comprehension, grammar, and reading.</p>
+						</section>
+						<section class="3u">
+							<span class="pennant icon fa-file"></span>
+							<h3>As close to the real test as it gets!</h3>
+							<p>Our simulated and practice tests are modeled after real SAT tests.</p>
+						</section>
+                        <section class="3u">
+							<span class="pennant icon fa-save"></span>
+							<h3>Save your results</h3>
+							<p> Our system allows you to check back on previous tests to keep track of your improvement and progress.</p>
+						</section>
+					</div>
+					
+				</div>
+			</div>
+		<!-- Copyright -->
+			<div id="copyright">
+				<a href="#top" class="bubble-top scrolly">Top</a>
+				<div class="container">
+					<div class="row">
+						<div class="6u">
+							<span>Copyright &copy; aposTrophy. All rights reserved.</span>
+						</div>
+					</div>
+				</div>
+			</div>
+	</body>
+</html>
