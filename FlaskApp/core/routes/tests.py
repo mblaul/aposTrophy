@@ -187,70 +187,40 @@ def showReview():
     if verify:
         return verify
     else:
-
-        data = []
-        userdata = []
-
-
         userdata = ResultLine.query.filter(ResultLine.result_id == resultid).order_by(ResultLine.question_id).all()
-        quesdata = Paragraph.query.join(Paragraph.questions).join(Question.options).order_by(Question.question_id).all()
-
-
-        for row in userdata:
-            for quesrow in quesdata:
-                if row.question_id == quesrow.question_id:
-                    data.append(quesrow)
-        # TODO: CONVERTME
-        # cur = mysql.connection.cursor()
-        # cur.execute(
-        #     '''
-        #     SELECT * FROM result_line
-        #     WHERE result_id={}
-        #     ORDER by question_id ASC
-        #     '''.format(resultid)
-        # )
-        # userdata = list(cur.fetchall())
-        #
-        # cur.execute('''SELECT  PARAGRAPH.PARAGRAPH_ID,
-        #             PARAGRAPH.PARAGRAPH_TEXT,
-        #             QUESTION.QUESTION_ID,
-        #             QUESTION.QUESTION_TEXT,
-        #             QUESTION.SKILL_LVL,
-        #             QUESTION.AREA,
-        #             OPTIONS.OPTION_ID,
-        #             OPTIONS.OPTION_TEXT,
-        #             OPTIONS.IS_CORRECT
-        #
-        #             FROM    apostrophy.PARAGRAPH
-        #             RIGHT JOIN apostrophy.QUESTION ON QUESTION.PARAGRAPH_ID = PARAGRAPH.PARAGRAPH_ID
-        #             RIGHT JOIN apostrophy.OPTIONS ON OPTIONS.QUESTION_ID = QUESTION.QUESTION_ID
-        #             ORDER BY apostrophy.QUESTION.QUESTION_ID ASC;
-        #             '''
-        #             )
-        # quesdata = list(cur.fetchall())
-        #
-        # for testrow in range(len(quesdata)):
-        #     for userrow in range(len(userdata)):
-        #         if userdata[userrow][3] == quesdata[testrow][2]:
-        #             data.append(quesdata[testrow])
+        quesdata = db.session.query(Paragraph, Question, Option).join(Paragraph.questions)\
+            .join(Question.options).order_by(Question.question_id).all()
 
         paragraphs = {}
         questions = {}
         options = {}
 
-        # data[x] where x is the row itself
-        # data[x][y] where y is the column
+        for row in userdata:
+            for quesrow in quesdata:
 
-        # Loop through each row of data returned from SQL query
-        for row in range(len(data)):
-            # Add values to question dictionary { pid, ptext }
-            paragraphs[data[row][0]] = data[row][1]
+                p = quesrow[0]
+                q = quesrow[1]
+                o = quesrow[2]
 
-            # Add values to question dictionary { qid, [pid, qtext] }
-            questions[data[row][2]] = [data[row][0], data[row][3]]
+                # We only care about our questions
+                if row.question_id == q.question_id:
 
-            # Add values to options dictionary { uniqueid, [qid, optid, opttext, is_correct] }
-            options[row] = [data[row][2], data[row][6], data[row][7], data[row][8]]
+                    # Add values to question dictionary { pid: <paragraph> }
+                    paragraphs[p.paragraph_id] = p
+
+                    # Add values to question dictionary { pid: { qid1: question1, qid2: ...} }
+                    # Each question is added to a list under the paragraph's ID
+                    if p.paragraph_id in questions.keys():
+                        questions[p.paragraph_id][q.question_id] = q
+                    else:
+                        questions[p.paragraph_id] = {q.question_id: q}
+
+                    # Add values to options dictionary { qid, [<option1>, <option2> ... ] }
+                    # The options dict will be by question ID, but append each option to a list held in each key
+                    if q.question_id in options.keys():
+                        options[q.question_id].append(o)
+                    else:
+                        options[q.question_id] = [o]
 
         return render_template('review.html', paragraphs=paragraphs, questions=questions, options=options,
                                userdata=userdata, submitAction=None, isPractice=None)
