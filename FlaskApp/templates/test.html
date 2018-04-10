@@ -111,12 +111,12 @@
                                         <p>
                                         <div class="form-group">
                                              <form action="{{ submitAction }}" method="post">
-                                                {% for question in questions[pid] %}
+                                                {% for qid, question in questions[pid].items() %}
                                                         {{ question.question_text }}
                                                         <br>
-                                                        {% for option in options[question.question_id] %}
+                                                        {% for option in options[qid] %}
                                                             <label><input type="radio"
-                                                                          name ="{{ question.question_id }}"
+                                                                          name ="{{ qid }}"
                                                                           value = "{{ option.option_id }}">
                                                                 {{ option.option_text }}
                                                             </label>

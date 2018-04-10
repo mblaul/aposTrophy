@@ -98,9 +98,9 @@ def showTest(isPractice, submitAction, data):
             # Add values to question dictionary { pid: <questions> }
             # Each question is added to a list under the paragraph's ID
             if p.paragraph_id in questions.keys():
-                questions[p.paragraph_id].append(q)
+                questions[p.paragraph_id][q.question_id] = q
             else:
-                questions[p.paragraph_id] = [q]
+                questions[p.paragraph_id] = {q.question_id: q}
 
             # Add values to options dictionary { qid, [<option1>, <option2> ... ] }
             # The options dict will be by question ID, but append each option to a list held in each key
