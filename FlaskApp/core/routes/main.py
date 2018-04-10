@@ -34,7 +34,7 @@ def showUser():
         ID = session['user']
         user = User.query.filter_by(user_id=ID).first()
         suggs = suggestTests()
-        return render_template('user.html', user=user, suggs=suggs)
+        return render_template('user.html', user=user, suggestions=suggs)
 
 
 @app.route('/practice', methods=['GET'])
